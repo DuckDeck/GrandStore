@@ -13,19 +13,36 @@ class G_S<T> {
     private var value:T?
     private var defaultValue:T?
     private var hasValue:Bool = false
-    private var timeOut:Int = 0
+    private var timeout:Int = 0
     private var storeLevel:Int = 0
-    
+    private var timeoutDate:NSDate?
     init(name:String,defaultValue:T) {
         self.name = name;
         self.defaultValue = defaultValue;
         storeLevel = self.getStoreLevel()
+        ShareStore.staredStore.setObject(self, forKey: self.name)
     }
     
-    var Value:T
+    init(name:String,defaultValue:T,timeout:Int) {  //一般这两个就够了
+        self.name = name;
+        self.defaultValue = defaultValue;
+        self.timeout = timeout
+        if self.timeout > 0{
+            timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+        }
+        storeLevel = self.getStoreLevel()
+        ShareStore.staredStore.setObject(self, forKey: self.name)
+    }
+    
+    
+    
+    var Value:T?
         {
         get
         {
+            if isExpire{
+                hasValue = false
+            }
             if !hasValue
             {
                 if storeLevel == 0 //如果存储等级为0,那么从userdefault取
@@ -45,10 +62,34 @@ class G_S<T> {
                 }
                 if storeLevel == 1 //这是用归档保存, 日后处理
                 {
-                    self.value = self.defaultValue;
+                    if !GrandCache.globleCache.hasCacheForKey(self.name){
+                         self.value = self.defaultValue
+                        if timeoutDate != nil{
+                            if self.value is NSCoding{
+                                GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
+                                timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                            }
+                            else{
+                                assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
+                            }
+                        }
+                        else{
+                            if self.value is NSCoding{
+                                GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name)
+                            }
+                            else{
+                                assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
+                            }
+                        }
+                        hasValue = true
+                    }
+                    else{
+                        self.value = GrandCache.globleCache.objectForKey(self.name) as? T
+                        hasValue = true
+                    }
                 }
             }
-            return self.value!
+            return self.value
         }
         set
         {
@@ -60,9 +101,37 @@ class G_S<T> {
             }
             if storeLevel == 1  //这是用归档保存, 日后处理
             {
-                
+                if timeoutDate != nil{
+                    if self.value is NSCoding{
+                        GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
+                        timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                    }
+                    else{
+                        assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
+                    }
+                }
+                else{
+                    if self.value is NSCoding{
+                        GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name)
+                        timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                    }
+                    else{
+                        assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
+                    }
+                }
             }
             hasValue = true
+        }
+    }
+    
+    var isExpire:Bool{
+        get{
+            if timeoutDate == nil{
+                return false
+            }
+            else{
+                return NSDate().compare(timeoutDate!) == NSComparisonResult.OrderedDescending
+            }
         }
     }
     
@@ -85,7 +154,12 @@ class G_S<T> {
 
 
 
-
+class ShareStore {
+    private static let sharedInstance = NSMutableDictionary()
+    class var staredStore:NSMutableDictionary {
+        return sharedInstance
+    }
+}
 
 
 
@@ -103,7 +177,7 @@ class GrandCache {
     var directory:String
     var needSave:Bool = true
     var frozenCacheInfo:[String:NSDate]
-    var defaultTimeoutInterval:NSTimeInterval = 86400
+    var defaultTimeoutInterval:NSTimeInterval = Double(Int.max)
     init(){
         var cacheDirectory:NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0]
         let oldCacheDirectroy = (cacheDirectory.stringByAppendingPathComponent(NSProcessInfo.processInfo().processName) as NSString).stringByAppendingPathComponent("GrandStore")
