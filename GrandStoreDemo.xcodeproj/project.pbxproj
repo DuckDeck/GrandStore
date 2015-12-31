@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A20655E41C2CCBC500C2FB1F /* ArrayTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20655E31C2CCBC500C2FB1F /* ArrayTestViewController.swift */; };
 		A29E138B1C2BD10400F623F1 /* StringTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29E138A1C2BD10400F623F1 /* StringTestViewController.swift */; };
 		A29E138D1C2BD82000F623F1 /* NumberTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29E138C1C2BD82000F623F1 /* NumberTestViewController.swift */; };
 		A2F0959F1C2A28F3008C84F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F0959E1C2A28F3008C84F4 /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A20655E31C2CCBC500C2FB1F /* ArrayTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTestViewController.swift; sourceTree = "<group>"; };
 		A29E138A1C2BD10400F623F1 /* StringTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTestViewController.swift; sourceTree = "<group>"; };
 		A29E138C1C2BD82000F623F1 /* NumberTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberTestViewController.swift; sourceTree = "<group>"; };
 		A2F0959B1C2A28F3008C84F4 /* GrandStoreDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrandStoreDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +68,7 @@
 				A2F095AA1C2A28F3008C84F4 /* Info.plist */,
 				A29E138A1C2BD10400F623F1 /* StringTestViewController.swift */,
 				A29E138C1C2BD82000F623F1 /* NumberTestViewController.swift */,
+				A20655E31C2CCBC500C2FB1F /* ArrayTestViewController.swift */,
 			);
 			path = GrandStoreDemo;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A20655E41C2CCBC500C2FB1F /* ArrayTestViewController.swift in Sources */,
 				A2F095A11C2A28F3008C84F4 /* ViewController.swift in Sources */,
 				A2F0959F1C2A28F3008C84F4 /* AppDelegate.swift in Sources */,
 				A2F095B91C2A342F008C84F4 /* G_S.swift in Sources */,
