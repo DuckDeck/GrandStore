@@ -44,7 +44,9 @@ class ArrayTestViewController: UIViewController {
     func setString(sender:UIButton)
     {
         if let txt = txtString?.text{
-            arrTest.Value?.append(txt)
+            var arr = arrTest.Value
+            arr?.append(txt)
+            arrTest.Value = arr
         }
     }
     
@@ -57,3 +59,4 @@ class ArrayTestViewController: UIViewController {
         lblString?.text = str
     }
 }
+

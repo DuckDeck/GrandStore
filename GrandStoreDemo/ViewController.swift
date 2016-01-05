@@ -47,9 +47,9 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         case 2:
             let arrayViewController = ArrayTestViewController()
             navigationController?.pushViewController(arrayViewController, animated: true)
-        case 3:break
-//            let sQLiteViewController = SQLiteViewController()
-//            navigationController?.pushViewController(sQLiteViewController, animated: true)
+        case 3:
+            let objectTestViewController = ObjectTestViewController()
+            navigationController?.pushViewController(objectTestViewController, animated: true)
 
         default:break
             

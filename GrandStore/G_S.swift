@@ -23,6 +23,8 @@ class G_S<T> {
         ShareStore.staredStore.setObject(self, forKey: self.name)
     }
     
+    
+    
     init(name:String,defaultValue:T,timeout:Int) {  //一般这两个就够了
         self.name = name;
         self.defaultValue = defaultValue;
@@ -113,7 +115,7 @@ class G_S<T> {
                 else{
                     if self.value is NSCoding{
                         GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name)
-                        timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                       // timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
                     }
                     else{
                         assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
