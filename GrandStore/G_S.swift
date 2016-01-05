@@ -16,14 +16,13 @@ class G_S<T> {
     private var timeout:Int = 0
     private var storeLevel:Int = 0
     private var timeoutDate:NSDate?
+    private var block:((observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void)?
     init(name:String,defaultValue:T) {
         self.name = name;
         self.defaultValue = defaultValue;
         storeLevel = self.getStoreLevel()
-        ShareStore.staredStore.setObject(self, forKey: self.name)
+        ShareStore.sharedStore.setObject(self, forKey: self.name)
     }
-    
-    
     
     init(name:String,defaultValue:T,timeout:Int) {  //一般这两个就够了
         self.name = name;
@@ -33,7 +32,7 @@ class G_S<T> {
             timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
         }
         storeLevel = self.getStoreLevel()
-        ShareStore.staredStore.setObject(self, forKey: self.name)
+        ShareStore.sharedStore.setObject(self, forKey: self.name)
     }
     
     
@@ -95,6 +94,13 @@ class G_S<T> {
         }
         set
         {
+            ShareStore.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
+                if obj.isEqualToString(self.name){
+                    if let call = self.block{
+                        call(observerObject: self,observerKey: self.name,oldValue: self.value as! AnyObject,newValue: newValue as! AnyObject)
+                    }
+                }
+            }
             self.value = newValue
             if storeLevel == 0
             {
@@ -126,7 +132,7 @@ class G_S<T> {
         }
     }
     
-    var isExpire:Bool{
+    private var isExpire:Bool{
         get{
             if timeoutDate == nil{
                 return false
@@ -137,7 +143,79 @@ class G_S<T> {
         }
     }
     
+    var wilfulValue:T?{
+        return value
+    }
     
+    
+    
+    private func clear(){
+        ShareStore.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
+            if obj.isEqualToString(self.name){
+                if let call = self.block{
+                    call(observerObject: self,observerKey: self.name,oldValue: self.value as! AnyObject,newValue: self.defaultValue as! AnyObject)
+                }
+            }
+        }
+        G_S.settingData().removeObjectForKey(self.name)
+        GrandCache.globleCache.removeCacheForKey(self.name)
+        hasValue = false
+    }
+    static func clearAllCache(){
+        ShareStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+            obj.clear()
+        }
+    }
+   static  func clearCacheWithNames(names:[String]){
+        ShareStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+            if names.contains(obj.name){
+                obj.clear()
+            }
+        }
+    }
+    static func clearCacheExceptNames(names:[String]){
+        ShareStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+            if !names.contains(obj.name){
+                obj.clear()
+            }
+        }
+    }
+   
+    static func clearCache(){
+        ShareStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+            if let store = obj as? G_S{
+                if store.timeoutDate != nil{
+                    store.clear()
+                }
+            }
+        }
+    }
+   static  func getValueWithName(name:String)->AnyObject?{
+        if let gs = ShareStore.sharedStore.objectForKey(name) as? G_S{
+            return gs.Value as? AnyObject
+        }
+        else{
+            return nil;
+        }
+    }
+    static  func setValueWithName(name:String,value:AnyObject){
+        if let gs = ShareStore.sharedStore.objectForKey(name) as? G_S{
+             gs.Value = value as? T
+        }
+    }
+    static func addObserver(observer:AnyObject,key:String,block:(observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void){
+        if let gs = ShareStore.sharedStore.objectForKey(key) as? G_S{
+            ShareStore.sharedObserverKey.addObject(key)
+            gs.block = block
+        }
+    }
+   static  func removeObserver(observer:AnyObject,key:String){
+        ShareStore.sharedObserverKey.removeObject(key)
+        if let gs = ShareStore.sharedStore.objectForKey(key) as? G_S{
+            gs.block = nil
+        }
+    }
+  
     private func getStoreLevel()->Int
     {
         if self.defaultValue! is Int || self.defaultValue! is String || self.defaultValue! is NSDate || self.defaultValue! is Bool || self.defaultValue! is Float || self.defaultValue! is Double || self.defaultValue! is NSData
@@ -157,16 +235,21 @@ class G_S<T> {
 
 
 class ShareStore {
-    private static let sharedInstance = NSMutableDictionary()
-    class var staredStore:NSMutableDictionary {
-        return sharedInstance
+    private static let sharedStoreInstance = NSMutableDictionary()
+    class var sharedStore:NSMutableDictionary {
+        return sharedStoreInstance
     }
+    private static let sharedObserverKeyInstance = NSMutableArray()
+    class var  sharedObserverKey:NSMutableArray{
+        return sharedObserverKeyInstance
+    }
+    
 }
 
 
 
 class GrandCache {
-    // Not turn EGOCahce to swift laguage
+    // Now turn EGOCahce to swift laguage
     private static let sharedInstance = GrandCache()
     class  var globleCache:GrandCache {
         return sharedInstance

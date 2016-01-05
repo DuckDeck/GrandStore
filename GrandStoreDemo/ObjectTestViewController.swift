@@ -116,12 +116,12 @@ class ObjectTestViewController: UIViewController {
         }
     }
 }
-class Student:NSCoding {
+class Student:NSObject, NSCoding {
     var name:String
     var age:Int
     var id:Int
     var address:Address
-    init(){
+    override init(){
         self.name = ""
         self.age = 0
         self.id = 0
@@ -148,13 +148,13 @@ class Student:NSCoding {
 }
 
 
-class  Address:NSCoding {
+class  Address:NSObject,NSCoding {
     var city:String = ""
     var provice:String = ""
     var district:String = ""
     var street:String = ""
     
-    init(){
+    override init(){
         
     }
     
