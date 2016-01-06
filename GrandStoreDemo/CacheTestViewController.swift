@@ -87,6 +87,6 @@ class CacheTestViewController: UIViewController {
         }
     }
     func clearCache(sender:UIButton){
-       
+        demo1.clear()
     }
 }
