@@ -1,14 +1,14 @@
 //
-//  G_S.swift
+//  GrandStore.swift
 //  GrandStoreDemo
 //
-//  Created by Tyrant on 12/23/15.
-//  Copyright © 2015 Qfq. All rights reserved.
+//  Created by Tyrant on 1/6/16.
+//  Copyright © 2016 Qfq. All rights reserved.
 //
 
 import Foundation
 
-class G_S<T> {
+class GrandStore<T> {
     private var name:String!
     private var value:T?
     private var defaultValue:T?
@@ -21,7 +21,7 @@ class G_S<T> {
         self.name = name;
         self.defaultValue = defaultValue;
         storeLevel = self.getStoreLevel()
-        GrandStore.sharedStore.setObject(self, forKey: self.name)
+        //GrandStore.sharedStore.setObject(self, forKey: self.name)
     }
     
     init(name:String,defaultValue:T,timeout:Int) {  //一般这两个就够了
@@ -32,7 +32,7 @@ class G_S<T> {
             timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
         }
         storeLevel = self.getStoreLevel()
-        GrandStore.sharedStore.setObject(self, forKey: self.name)
+        //GrandStore.sharedStore.setObject(self, forKey: self.name)
     }
     
     
@@ -49,23 +49,23 @@ class G_S<T> {
             {
                 if storeLevel == 0 //如果存储等级为0,那么从userdefault取
                 {
-                    if G_S.settingData().objectForKey(name) == nil //如果取不出来
+                    if GrandStore.settingData().objectForKey(name) == nil //如果取不出来
                     {
                         self.value = self.defaultValue;
-                        G_S.settingData().setObject(self.value! as? AnyObject, forKey: self.name)
-                        G_S.settingData().synchronize()
+                        GrandStore.settingData().setObject(self.value! as? AnyObject, forKey: self.name)
+                        GrandStore.settingData().synchronize()
                         hasValue = true
                     }
                     else
                     {
-                        self.value = G_S.settingData().objectForKey(self.name) as? T
+                        self.value = GrandStore.settingData().objectForKey(self.name) as? T
                         hasValue = true
                     }
                 }
                 if storeLevel == 1 //这是用归档保存, 日后处理
                 {
                     if !GrandCache.globleCache.hasCacheForKey(self.name){
-                         self.value = self.defaultValue
+                        self.value = self.defaultValue
                         if timeoutDate != nil{
                             if self.value is NSCoding{
                                 GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
@@ -95,8 +95,8 @@ class G_S<T> {
         }
         set
         {
-            GrandStore.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
-                if obj.isEqualToString(self.name){
+//            GrandStoreSetting.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
+//                if obj.isEqualToString(self.name){
                     if let call = self.observerBlock{
                         if self.value == nil
                         {
@@ -104,15 +104,15 @@ class G_S<T> {
                         }
                         call(observerObject: self,observerKey: self.name,oldValue: self.value as! AnyObject,newValue: newValue as! AnyObject)
                     }
-                }
-            }
+//                }
+//            }
             self.value = newValue
             if storeLevel == 0
             {
-                G_S.settingData().setObject(self.value! as? AnyObject, forKey: self.name)
-                G_S.settingData().synchronize()
+                GrandStore.settingData().setObject(self.value! as? AnyObject, forKey: self.name)
+                GrandStore.settingData().synchronize()
                 if timeoutDate != nil{
-                      timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                    timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
                 }
             }
             if storeLevel == 1  //这是用归档保存, 日后处理
@@ -129,7 +129,7 @@ class G_S<T> {
                 else{
                     if self.value is NSCoding{
                         GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name)
-                       // timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                        // timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
                     }
                     else{
                         assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
@@ -162,31 +162,27 @@ class G_S<T> {
         }
     }
     
-     func clear(){
-        GrandStore.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
-            if obj.isEqualToString(self.name){
-                if let call = self.observerBlock{
-                    call(observerObject: self,observerKey: self.name,oldValue: self.value as! AnyObject,newValue: self.defaultValue as! AnyObject)
-                }
+    func clear(){
+//        GrandStoreSetting.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
+//            if obj.isEqualToString(self.name){
+            if let call = self.observerBlock{
+                call(observerObject: self,observerKey: self.name,oldValue: self.value as! AnyObject,newValue: self.defaultValue as! AnyObject)
             }
-        }
-        G_S.settingData().removeObjectForKey(self.name)
+//            }
+//        }
+        GrandStore.settingData().removeObjectForKey(self.name)
         GrandCache.globleCache.removeCacheForKey(self.name)
         hasValue = false
     }
-   
-  
+    
+    
     func addObserver(key:String,block:(observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void){
-        if let gs = GrandStore.sharedStore.objectForKey(self.name) as? G_S{
-            GrandStore.sharedObserverKey.addObject(self.name)
-            gs.observerBlock = block
-        }
+        //GrandStoreSetting.sharedObserverKey.addObject(self.name)
+        self.observerBlock = block
     }
     func removeObserver(key:String){
-        GrandStore.sharedObserverKey.removeObject(self.name)
-        if let gs = GrandStore.sharedStore.objectForKey(self.name) as? G_S{
-            gs.observerBlock = nil
-        }
+       // GrandStoreSetting.sharedObserverKey.removeObject(self.name)
+        self.observerBlock = nil
     }
     private func getStoreLevel()->Int
     {
@@ -204,72 +200,69 @@ class G_S<T> {
     //在Swift中,当需要把一个类转为泛型类时,Swift必需知道这个泛型类是个什么样的类,不然就不行,现在Swift又没有KVC和KVO,所以很多OBJC的功能目前实现不了,以后看有没有机会实现
 }
 
-
-
-
-class GrandStore {
-    private static let sharedStoreInstance = NSMutableDictionary()
-    class var sharedStore:NSMutableDictionary {
-        return sharedStoreInstance
-    }
-    private static let sharedObserverKeyInstance = NSMutableArray()
-    class var  sharedObserverKey:NSMutableArray{
-        return sharedObserverKeyInstance
-    }
-    static func clearAllCache(){
-        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-            obj.clear()
-        }
-    }
-    static  func clearCacheWithNames(names:[String]){
-        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-            if names.contains(obj.name){
-                obj.clear()
-            }
-        }
-    }
-    static func clearCacheExceptNames(names:[String]){
-        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-            if !names.contains(obj.name){
-                obj.clear()
-            }
-        }
-    }
-    
-    static func clearCache(){
-        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-//            if let store = obj as? G_S{
-//                if store.timeoutDate != nil{
-//                    store.clear()
-//                }
-//            }
-            //没办法,只有用KVC了
-//            if let _ = obj.valueForKey("timeoutDate") as? NSDate{
-//                
-//            }
-//            else{
+//class GrandStoreSetting {
+//    private static let sharedStoreInstance = NSMutableDictionary()
+//    class var sharedStore:NSMutableDictionary {
+//        return sharedStoreInstance
+//    }
+//    private static let sharedObserverKeyInstance = NSMutableArray()
+//    class var  sharedObserverKey:NSMutableArray{
+//        return sharedObserverKeyInstance
+//    }
+//    static func clearAllCache(){
+//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+//            obj.clear()
+//        }
+//    }
+//    static  func clearCacheWithNames(names:[String]){
+//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+//            if names.contains(obj.name){
 //                obj.clear()
 //            }
-            //swift 里面没有KVC
-            
-        }
-    }
-//    static  func getValueWithName(name:String)->AnyObject?{
-//        if let gs = GrandStore.sharedStore.objectForKey(name) as? G_S{
-//            return gs.Value as? AnyObject
-//        }
-//        else{
-//            return nil;
 //        }
 //    }
-//    static  func setValueWithName(name:String,value:AnyObject){
-//        if let gs = GrandStore.sharedStore.objectForKey(name) as? G_S{
-//            gs.Value = value as? T
+//    static func clearCacheExceptNames(names:[String]){
+//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+//            if !names.contains(obj.name){
+//                obj.clear()
+//            }
 //        }
 //    }
-
-}
-
+//    
+//    static func clearCache(){
+//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
+//            //            if let store = obj as? G_S{
+//            //                if store.timeoutDate != nil{
+//            //                    store.clear()
+//            //                }
+//            //            }
+//            //没办法,只有用KVC了
+//            //            if let _ = obj.valueForKey("timeoutDate") as? NSDate{
+//            //
+//            //            }
+//            //            else{
+//            //                obj.clear()
+//            //            }
+//            //swift 里面没有KVC
+//            
+//        }
+//    }
+    //    static  func getValueWithName(name:String)->AnyObject?{
+    //        if let gs = GrandStore.sharedStore.objectForKey(name) as? G_S{
+    //            return gs.Value as? AnyObject
+    //        }
+    //        else{
+    //            return nil;
+    //        }
+    //    }
+    //    static  func setValueWithName(name:String,value:AnyObject){
+    //        if let gs = GrandStore.sharedStore.objectForKey(name) as? G_S{
+    //            gs.Value = value as? T
+    //        }
+    //    }
+    
+//}
+//在Swift目前的机制下,这个类没什么用
 
 
 class GrandCache {
@@ -450,7 +443,7 @@ class GrandCache {
         }
         setCacheTimeoutInterval(timeoutInterval, key: key)
     }
-
+    
     func setData(data:NSData,key:String){
         setData(data, key: key, timeoutInterval: defaultTimeoutInterval)
     }
@@ -522,11 +515,9 @@ class GrandCache {
         self.setData(NSKeyedArchiver.archivedDataWithRootObject(obj), key: key, timeoutInterval: timeoutInterval)
     }
     
-
+    
     func cachePathForKey(directory:String,var key:String)->String{
         key = key.stringByReplacingOccurrencesOfString("/", withString: "_")
         return directory.stringByAppendingString(key)
     }
 }
-
-

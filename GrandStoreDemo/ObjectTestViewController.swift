@@ -9,7 +9,7 @@
 import UIKit
 
 class ObjectTestViewController: UIViewController {
-    let stu = G_S(name: "student", defaultValue: Student())
+    let stu = GrandStore(name: "student", defaultValue: Student())
      var txtName:UITextField?
     var txtAge:UITextField?
     var txtProvince:UITextField?
@@ -19,6 +19,9 @@ class ObjectTestViewController: UIViewController {
     var btnSetStudent:UIButton?
     var btnGetStudent:UIButton?
     var lblStudent:UILabel?
+    var btnClear:UIButton?
+    var btnAddAbserver:UIButton?
+    var removeObserver:UIButton?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.whiteColor()
@@ -58,21 +61,34 @@ class ObjectTestViewController: UIViewController {
         txtStreet?.borderStyle = UITextBorderStyle.RoundedRect
         view.addSubview(txtStreet!)
         
-        btnSetStudent = UIButton(frame: CGRect(x: 10, y: CGRectGetMaxY(txtStreet!.frame), width: UIScreen.mainScreen().bounds.size.width / 2 - 20, height: 40))
+        btnSetStudent = UIButton(frame: CGRect(x: 10, y: CGRectGetMaxY(txtStreet!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
         btnSetStudent?.setTitle("设置", forState: UIControlState.Normal)
         btnSetStudent?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btnSetStudent?.addTarget(self, action: "setStudent:", forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnSetStudent!)
         
-        btnGetStudent = UIButton(frame: CGRect(x: CGRectGetMaxX(btnSetStudent!.frame), y: CGRectGetMaxY(txtStreet!.frame), width: UIScreen.mainScreen().bounds.size.width / 2 - 20, height: 40))
+        btnGetStudent = UIButton(frame: CGRect(x: CGRectGetMaxX(btnSetStudent!.frame), y: CGRectGetMaxY(txtStreet!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
         btnGetStudent?.setTitle("取置", forState: UIControlState.Normal)
         btnGetStudent?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btnGetStudent?.addTarget(self, action: "getStudent:", forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnGetStudent!)
         
-        lblStudent = UILabel(frame: CGRect(x: 10, y: CGRectGetMaxY(btnSetStudent!.frame), width: UIScreen.mainScreen().bounds.size.width - 20, height: 40))
+        lblStudent = UILabel(frame: CGRect(x: 10, y: CGRectGetMaxY(btnSetStudent!.frame), width: UIScreen.mainScreen().bounds.size.width - 20, height: 80))
+        lblStudent?.numberOfLines = 0
+        lblStudent?.font = UIFont.systemFontOfSize(12)
         view.addSubview(lblStudent!)
         
+        btnClear = UIButton(frame: CGRect(x:  CGRectGetMaxX(btnGetStudent!.frame), y: btnGetStudent!.frame.origin.y, width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
+        btnClear?.setTitle("清空", forState: UIControlState.Normal)
+        btnClear?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        btnClear?.addTarget(self, action: "clearStudent:", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(btnClear!)
+        
+        btnAddAbserver = UIButton(frame: CGRect(x:  10, y: CGRectGetMaxY(lblStudent!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
+        btnAddAbserver?.setTitle("添加观察", forState: UIControlState.Normal)
+        btnAddAbserver?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        btnAddAbserver?.addTarget(self, action: "addObserver:", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(btnAddAbserver!)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -115,6 +131,17 @@ class ObjectTestViewController: UIViewController {
             lblStudent?.text = "Name:\(student.name) id:\(student.id) age:\(student.age) address:\(student.address.provice)-\(student.address.city)-\(student.address.district)-\(student.address.street) "
         }
     }
+    func clearStudent(sender:UIButton)
+    {
+        stu.clear()
+    }
+    func addObserver(sender:UIButton){
+       stu.addObserver("stu1") { (observerObject, observerKey, oldValue, newValue) -> Void in
+         self.lblStudent?.text = "old:\(oldValue.debugDescription), new:\(newValue.debugDescription)"
+        }
+     
+    }
+    
 }
 class Student:NSObject, NSCoding {
     var name:String
@@ -145,6 +172,13 @@ class Student:NSObject, NSCoding {
         id = aDecoder.decodeIntegerForKey("id")
         address = aDecoder.decodeObjectForKey("address") as! Address
     }
+    func desciption()->String{
+        return "name:\(name) age:\(age)id :\(id) address:\(address)"
+    }
+    
+   override  var debugDescription:String{
+        return self.desciption()
+    }
 }
 
 
@@ -169,5 +203,11 @@ class  Address:NSObject,NSCoding {
         provice = aDecoder.decodeObjectForKey("provice") as! String
         district = aDecoder.decodeObjectForKey("district") as! String
         street = aDecoder.decodeObjectForKey("street") as! String
+    }
+    func desciption()->String{
+        return "province:\(provice) city\(city) district \(district) street \(street)"
+    }
+    override  var debugDescription:String{
+        return self.desciption()
     }
 }

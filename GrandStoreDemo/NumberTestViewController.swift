@@ -9,7 +9,7 @@
 import UIKit
 
 class NumberTestViewController: UIViewController {
-    var demo2 = G_S(name: "DemoNumber", defaultValue: 0.0)
+    var demo2 = GrandStore(name: "DemoNumber", defaultValue: 0.0)
     var txtString:UITextField?
     var btnSet:UIButton?
     var btnGet:UIButton?

@@ -9,7 +9,7 @@
 import UIKit
 
 class ArrayTestViewController: UIViewController {
-    let arrTest = G_S(name: "arrTest", defaultValue: [String]())
+    let arrTest = GrandStore(name: "arrTest", defaultValue: [String]())
     var txtString:UITextField?
     var btnSet:UIButton?
     var btnGet:UIButton?

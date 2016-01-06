@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let rootNavigationController = UINavigationController(rootViewController: mainViewController)
         window?.rootViewController = rootNavigationController
         window?.makeKeyAndVisible()
+        //一些功能在这里测试
         return true
     }
 
