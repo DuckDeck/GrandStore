@@ -73,7 +73,7 @@ class ObjectTestViewController: UIViewController {
         btnGetStudent?.addTarget(self, action: "getStudent:", forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnGetStudent!)
         
-        lblStudent = UILabel(frame: CGRect(x: 10, y: CGRectGetMaxY(btnSetStudent!.frame), width: UIScreen.mainScreen().bounds.size.width - 20, height: 80))
+        lblStudent = UILabel(frame: CGRect(x: 10, y: CGRectGetMaxY(btnSetStudent!.frame), width: UIScreen.mainScreen().bounds.size.width - 20, height: 100))
         lblStudent?.numberOfLines = 0
         lblStudent?.font = UIFont.systemFontOfSize(12)
         view.addSubview(lblStudent!)
@@ -130,15 +130,20 @@ class ObjectTestViewController: UIViewController {
             let student = stu.Value!
             lblStudent?.text = "Name:\(student.name) id:\(student.id) age:\(student.age) address:\(student.address.provice)-\(student.address.city)-\(student.address.district)-\(student.address.street) "
         }
+        else{
+            lblStudent?.text = "";
+        }
     }
     func clearStudent(sender:UIButton)
     {
         stu.clear()
+        lblStudent?.text = "已经清空"
     }
     func addObserver(sender:UIButton){
        stu.addObserver("stu1") { (observerObject, observerKey, oldValue, newValue) -> Void in
          self.lblStudent?.text = "old:\(oldValue.debugDescription), new:\(newValue.debugDescription)"
         }
+         lblStudent?.text = "已经添加观察"
      
     }
     

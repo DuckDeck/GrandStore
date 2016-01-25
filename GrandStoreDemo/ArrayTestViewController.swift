@@ -47,6 +47,7 @@ class ArrayTestViewController: UIViewController {
             var arr = arrTest.Value
             arr?.append(txt)
             arrTest.Value = arr
+            lblString?.text = "\(txt)成功添加到数组"
         }
     }
     

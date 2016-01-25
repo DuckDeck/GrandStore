@@ -23,6 +23,7 @@ class CacheTestViewController: UIViewController {
         txtString = UITextField(frame: CGRect(x: 20, y: 67, width: UIScreen.mainScreen().bounds.width - 40, height: 40))
         txtString?.borderStyle = UITextBorderStyle.RoundedRect
         txtString?.placeholder = "你要设定的值"
+        txtString?.text = "你要设置的值"
         view.addSubview(txtString!)
         
         txtTimeout = UITextField(frame: CGRect(x: 20, y: CGRectGetMaxY(txtString!.frame) + 10, width: UIScreen.mainScreen().bounds.width - 40, height: 40))
@@ -85,8 +86,10 @@ class CacheTestViewController: UIViewController {
         if txtTimeout?.text != ""{
             demo1.setCacheTime(Int(txtTimeout!.text!)!)
         }
+        
     }
     func clearCache(sender:UIButton){
         demo1.clear()
+        lblString?.text = "成功清空缓存"
     }
 }
