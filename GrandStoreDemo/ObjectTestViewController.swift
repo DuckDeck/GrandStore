@@ -21,7 +21,7 @@ class ObjectTestViewController: UIViewController {
     var lblStudent:UILabel?
     var btnClear:UIButton?
     var btnAddAbserver:UIButton?
-    var removeObserver:UIButton?
+    var btnRemoveObserver:UIButton?
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.whiteColor()
@@ -89,6 +89,13 @@ class ObjectTestViewController: UIViewController {
         btnAddAbserver?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
         btnAddAbserver?.addTarget(self, action: "addObserver:", forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnAddAbserver!)
+        
+        
+        btnRemoveObserver = UIButton(frame: CGRect(x:  CGRectGetMaxX(btnAddAbserver!.frame) + 5, y: CGRectGetMaxY(lblStudent!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
+        btnRemoveObserver?.setTitle("移除观察", forState: UIControlState.Normal)
+        btnRemoveObserver?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        btnRemoveObserver?.addTarget(self, action: "removeObserver:", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(btnRemoveObserver!)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -146,6 +153,11 @@ class ObjectTestViewController: UIViewController {
         }
      lblStudent?.text = "已经添加观察"
      
+    }
+    
+    func removeObserver(sender:UIButton){
+        stu.removeObserver()
+         lblStudent?.text = "已经移除观察"
     }
     
 }
