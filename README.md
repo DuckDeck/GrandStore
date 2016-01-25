@@ -54,7 +54,7 @@ stu.addObserver { (observerObject, observerKey, oldValue, newValue) -> Void in
         //if you want to observer the value change, just call the addObserver func, and set the block callback
 ```
 ```swift
-stu.removeObserver() call the removeObserver() func to remoce the observer
+stu.removeObserver() //call the removeObserver() func to remoce the observer
 ```
 *Review the demo project will help you understand more 
 
@@ -130,9 +130,9 @@ stu.addObserver { (observerObject, observerKey, oldValue, newValue) -> Void in
         //if you want to observer the value change, just call the addObserver func, and set the block callback
 ```
 ```swift
-stu.removeObserver() call the removeObserver() func to remoce the observer
+stu.removeObserver() //call the removeObserver() func to remoce the observer
 ```
-*参考StarReviewDemo会更好的理解StarReview怎么使用
+*参考GrandStoreDemo会更好的理解GrandStore怎么使用
 
 <br>
 
