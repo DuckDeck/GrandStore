@@ -60,13 +60,13 @@ stu.removeObserver() //call the removeObserver() func to remoce the observer
 
 <br>
 
-![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/StarReview/master/StarReviewDemo/StarReviewDemo/Resource/1.gif)
+![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/GrandStore/master/GrandStoreDemo/GrandStoreDemo/Resource/1.gif)
 <br>
 
-![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/StarReview/master/StarReviewDemo/StarReviewDemo/Resource/2.gif)
+![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/GrandStore/master/GrandStoreDemo/GrandStoreDemo/Resource/2.gif)
 <br>
 
-![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/StarReview/master/StarReviewDemo/StarReviewDemo/Resource/3.gif)
+![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/GrandStore/master/GrandStoreDemo/GrandStoreDemo/Resource/3.gif)
 
 
 ##Contact 
@@ -136,13 +136,13 @@ stu.removeObserver() //call the removeObserver() func to remoce the observer
 
 <br>
 
-![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/StarReview/master/StarReviewDemo/StarReviewDemo/Resource/1.gif)
+![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/GrandStore/master/GrandStoreDemo/GrandStoreDemo/Resource/1.gif)
 <br>
 
-![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/StarReview/master/StarReviewDemo/StarReviewDemo/Resource/2.gif)
+![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/GrandStore/master/GrandStoreDemo/GrandStoreDemo/Resource/2.gif)
 <br>
 
-![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/StarReview/master/StarReviewDemo/StarReviewDemo/Resource/3.gif)
+![add -DDEBUG location](https://raw.githubusercontent.com/DuckDeck/GrandStore/master/GrandStoreDemo/GrandStoreDemo/Resource/3.gif)
 
 
 ##和我联系
