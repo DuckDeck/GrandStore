@@ -45,6 +45,7 @@ class StringTestViewController: UIViewController {
     {
         if let txt = txtString?.text{
             demo1.Value = txt
+           demo1.removeObserver()
         }
     }
     

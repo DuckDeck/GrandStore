@@ -8,7 +8,7 @@
 
 import Foundation
 
-class GrandStore<T> {
+public class GrandStore<T> {
     private var name:String!
     private var value:T?
     private var defaultValue:T?
@@ -176,11 +176,11 @@ class GrandStore<T> {
     }
     
     
-    func addObserver(key:String,block:(observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void){
+    func addObserver(block:(observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void){
         //GrandStoreSetting.sharedObserverKey.addObject(self.name)
         self.observerBlock = block
     }
-    func removeObserver(key:String){
+    func removeObserver(){
        // GrandStoreSetting.sharedObserverKey.removeObject(self.name)
         self.observerBlock = nil
     }

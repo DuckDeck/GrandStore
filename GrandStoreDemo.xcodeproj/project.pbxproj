@@ -11,6 +11,9 @@
 		A20CFBCC1C3B622100985D4D /* ObjectTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20CFBCB1C3B622000985D4D /* ObjectTestViewController.swift */; };
 		A29E138B1C2BD10400F623F1 /* StringTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29E138A1C2BD10400F623F1 /* StringTestViewController.swift */; };
 		A29E138D1C2BD82000F623F1 /* NumberTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29E138C1C2BD82000F623F1 /* NumberTestViewController.swift */; };
+		A2B308971C56080200916C17 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = A2B308961C56080200916C17 /* 1.png */; };
+		A2B308991C56080500916C17 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = A2B308981C56080500916C17 /* 2.png */; };
+		A2B3089B1C56080800916C17 /* 3.png in Resources */ = {isa = PBXBuildFile; fileRef = A2B3089A1C56080800916C17 /* 3.png */; };
 		A2F0959F1C2A28F3008C84F4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F0959E1C2A28F3008C84F4 /* AppDelegate.swift */; };
 		A2F095A11C2A28F3008C84F4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A2F095A01C2A28F3008C84F4 /* ViewController.swift */; };
 		A2F095A61C2A28F3008C84F4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2F095A51C2A28F3008C84F4 /* Assets.xcassets */; };
@@ -24,6 +27,9 @@
 		A20CFBCB1C3B622000985D4D /* ObjectTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectTestViewController.swift; sourceTree = "<group>"; };
 		A29E138A1C2BD10400F623F1 /* StringTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringTestViewController.swift; sourceTree = "<group>"; };
 		A29E138C1C2BD82000F623F1 /* NumberTestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberTestViewController.swift; sourceTree = "<group>"; };
+		A2B308961C56080200916C17 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
+		A2B308981C56080500916C17 /* 2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2.png; sourceTree = "<group>"; };
+		A2B3089A1C56080800916C17 /* 3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3.png; sourceTree = "<group>"; };
 		A2F0959B1C2A28F3008C84F4 /* GrandStoreDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrandStoreDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2F0959E1C2A28F3008C84F4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A2F095A01C2A28F3008C84F4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -45,6 +51,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2B308951C5607E800916C17 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				A2B3089A1C56080800916C17 /* 3.png */,
+				A2B308981C56080500916C17 /* 2.png */,
+				A2B308961C56080200916C17 /* 1.png */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
 		A2F095921C2A28F3008C84F4 = {
 			isa = PBXGroup;
 			children = (
@@ -65,6 +81,7 @@
 		A2F0959D1C2A28F3008C84F4 /* GrandStoreDemo */ = {
 			isa = PBXGroup;
 			children = (
+				A2B308951C5607E800916C17 /* Resource */,
 				A2F0959E1C2A28F3008C84F4 /* AppDelegate.swift */,
 				A2F095A01C2A28F3008C84F4 /* ViewController.swift */,
 				A2F095A51C2A28F3008C84F4 /* Assets.xcassets */,
@@ -145,7 +162,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2B3089B1C56080800916C17 /* 3.png in Resources */,
+				A2B308971C56080200916C17 /* 1.png in Resources */,
 				A2F095A91C2A28F3008C84F4 /* LaunchScreen.storyboard in Resources */,
+				A2B308991C56080500916C17 /* 2.png in Resources */,
 				A2F095A61C2A28F3008C84F4 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -98,6 +98,7 @@ class ObjectTestViewController: UIViewController {
         txtDistrict?.resignFirstResponder()
         txtStreet?.resignFirstResponder()
         txtProvince?.resignFirstResponder()
+        
     }
     
     func setStudent(sender:UIButton){
@@ -140,10 +141,10 @@ class ObjectTestViewController: UIViewController {
         lblStudent?.text = "已经清空"
     }
     func addObserver(sender:UIButton){
-       stu.addObserver("stu1") { (observerObject, observerKey, oldValue, newValue) -> Void in
-         self.lblStudent?.text = "old:\(oldValue.debugDescription), new:\(newValue.debugDescription)"
+        stu.addObserver { (observerObject, observerKey, oldValue, newValue) -> Void in
+              self.lblStudent?.text = "old:\(oldValue.debugDescription), new:\(newValue.debugDescription)"
         }
-         lblStudent?.text = "已经添加观察"
+     lblStudent?.text = "已经添加观察"
      
     }
     
