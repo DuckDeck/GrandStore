@@ -17,14 +17,14 @@ public class GrandStore<T> {
     private var storeLevel:Int = 0
     private var timeoutDate:NSDate?
     private var observerBlock:((observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void)?
-    init(name:String,defaultValue:T) {
+  public  init(name:String,defaultValue:T) {
         self.name = name;
         self.defaultValue = defaultValue;
         storeLevel = self.getStoreLevel()
         //GrandStore.sharedStore.setObject(self, forKey: self.name)
     }
     
-    init(name:String,defaultValue:T,timeout:Int) {  //一般这两个就够了
+  public  init(name:String,defaultValue:T,timeout:Int) {  //一般这两个就够了
         self.name = name;
         self.defaultValue = defaultValue;
         self.timeout = timeout
@@ -37,7 +37,7 @@ public class GrandStore<T> {
     
     
     
-    var Value:T?
+  public  var Value:T?
         {
         get
         {
@@ -151,7 +151,7 @@ public class GrandStore<T> {
         }
     }
     
-    var wilfulValue:T?{
+  public  var wilfulValue:T?{
         return value
     }
     
@@ -162,7 +162,7 @@ public class GrandStore<T> {
         }
     }
     
-    func clear(){
+    public func clear(){
 //        GrandStoreSetting.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
 //            if obj.isEqualToString(self.name){
             if let call = self.observerBlock{
@@ -176,11 +176,11 @@ public class GrandStore<T> {
     }
     
     
-    func addObserver(block:(observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void){
+  public  func addObserver(block:(observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void){
         //GrandStoreSetting.sharedObserverKey.addObject(self.name)
         self.observerBlock = block
     }
-    func removeObserver(){
+  public  func removeObserver(){
        // GrandStoreSetting.sharedObserverKey.removeObject(self.name)
         self.observerBlock = nil
     }
