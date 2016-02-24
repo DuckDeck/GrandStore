@@ -17,7 +17,7 @@ public class GrandStore<T> {
     private var storeLevel:Int = 0
     private var timeoutDate:NSDate?
     private var observerBlock:((observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void)?
-  public  init(name:String,defaultValue:T) {
+   public  init(name:String,defaultValue:T) {
         self.name = name;
         self.defaultValue = defaultValue;
         storeLevel = self.getStoreLevel()
@@ -277,7 +277,7 @@ class GrandCache {
     var diskQueue:dispatch_queue_t
     var cacheInfo:[String:NSDate]
     var directory:String
-    var needSave:Bool = true
+    var needSave:Bool = false
     var frozenCacheInfo:[String:NSDate]
     var defaultTimeoutInterval:NSTimeInterval = Double(Int.max)
     init(){
