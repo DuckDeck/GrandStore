@@ -15,6 +15,7 @@ public class GrandStore<T> {
     private var hasValue:Bool = false
     private var timeout:Int = 0
     private var storeLevel:Int = 0
+    private var isTemp = false//只是放到内存里临时保存
     private var timeoutDate:NSDate?
     private var observerBlock:((observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void)?
    public  init(name:String,defaultValue:T) {
@@ -24,12 +25,17 @@ public class GrandStore<T> {
         //GrandStore.sharedStore.setObject(self, forKey: self.name)
     }
     
+
+    
   public  init(name:String,defaultValue:T,timeout:Int) {  //一般这两个就够了
         self.name = name;
         self.defaultValue = defaultValue;
         self.timeout = timeout
         if self.timeout > 0{
             timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+        }
+        else{
+            isTemp = true
         }
         storeLevel = self.getStoreLevel()
         //GrandStore.sharedStore.setObject(self, forKey: self.name)
@@ -47,6 +53,13 @@ public class GrandStore<T> {
             }
             if !hasValue
             {
+                if isTemp{
+                    if self.value == nil{
+                        self.value = defaultValue
+                        hasValue = true
+                    }
+                }
+                else{
                 if storeLevel == 0 //如果存储等级为0,那么从userdefault取
                 {
                     if GrandStore.settingData().objectForKey(name) == nil //如果取不出来
@@ -90,6 +103,7 @@ public class GrandStore<T> {
                         hasValue = true
                     }
                 }
+                }
             }
             return self.value
         }
@@ -107,7 +121,11 @@ public class GrandStore<T> {
 //                }
 //            }
             self.value = newValue
-            if storeLevel == 0
+            if isTemp{
+                hasValue = true
+            }
+            else{
+             if storeLevel == 0
             {
                 GrandStore.settingData().setObject(self.value! as? AnyObject, forKey: self.name)
                 GrandStore.settingData().synchronize()
@@ -134,6 +152,7 @@ public class GrandStore<T> {
                     else{
                         assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
                     }
+                }
                 }
             }
             hasValue = true

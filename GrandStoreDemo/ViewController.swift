@@ -10,7 +10,7 @@ import UIKit
 
 class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
     var tbMenu:UITableView?
-    var arrMenu:[String] = ["测试字符串","测试数","测试数组和字典","测试自定义对象","测试缓存"]
+    var arrMenu:[String] = ["测试字符串","测试数","测试数组和字典","测试自定义对象","测试缓存","测试暂存"]
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Demo"
@@ -53,7 +53,8 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
         case 4:
             let cacheTestViewController = CacheTestViewController()
             navigationController?.pushViewController(cacheTestViewController, animated: true)
-
+        case 5:
+            navigationController?.pushViewController(TempSaveTestViewController(), animated: true)
         default:break
             
         }
