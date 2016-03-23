@@ -26,14 +26,14 @@ class TempSaveTestViewController: UIViewController {
         btnSet = UIButton(frame: CGRect(x: 20, y: CGRectGetMaxY(txtString!.frame), width: UIScreen.mainScreen().bounds.width - 40, height: 40))
         btnSet?.setTitle("设值", forState: UIControlState.Normal)
         btnSet?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnSet?.addTarget(self, action: "setString:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnSet?.addTarget(self, action: #selector(TempSaveTestViewController.setString(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnSet!)
         
         
         btnGet = UIButton(frame: CGRect(x: 20, y: CGRectGetMaxY(btnSet!.frame), width: UIScreen.mainScreen().bounds.width - 40, height: 40))
         btnGet?.setTitle("取值", forState: UIControlState.Normal)
         btnGet?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnGet?.addTarget(self, action: "getString:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnGet?.addTarget(self, action: #selector(TempSaveTestViewController.getString(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnGet!)
         
         

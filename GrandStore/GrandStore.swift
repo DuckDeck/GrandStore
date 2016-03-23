@@ -535,8 +535,8 @@ class GrandCache {
     }
     
     
-    func cachePathForKey(directory:String,var key:String)->String{
-        key = key.stringByReplacingOccurrencesOfString("/", withString: "_")
-        return directory.stringByAppendingString(key)
+    func cachePathForKey(directory:String,key:String)->String{
+       let path = key.stringByReplacingOccurrencesOfString("/", withString: "_")
+        return directory.stringByAppendingString(path)
     }
 }

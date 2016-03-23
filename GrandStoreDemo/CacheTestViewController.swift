@@ -35,20 +35,20 @@ class CacheTestViewController: UIViewController {
         btnSet = UIButton(frame: CGRect(x: 10, y: CGRectGetMaxY(txtTimeout!.frame), width: UIScreen.mainScreen().bounds.width / 3 - 20, height: 40))
         btnSet?.setTitle("设值", forState: UIControlState.Normal)
         btnSet?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnSet?.addTarget(self, action: "setString:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnSet?.addTarget(self, action: #selector(CacheTestViewController.setString(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnSet!)
         
         
         btnGet = UIButton(frame: CGRect(x: CGRectGetMaxX(btnSet!.frame) + 10, y: CGRectGetMaxY(txtTimeout!.frame), width: UIScreen.mainScreen().bounds.width / 3 - 20, height: 40))
         btnGet?.setTitle("取值", forState: UIControlState.Normal)
         btnGet?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnGet?.addTarget(self, action: "getString:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnGet?.addTarget(self, action: #selector(CacheTestViewController.getString(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnGet!)
         
         btnSetCacheTime = UIButton(frame: CGRect(x: CGRectGetMaxX(btnGet!.frame) + 10, y: CGRectGetMaxY(txtTimeout!.frame), width: UIScreen.mainScreen().bounds.width / 3 , height: 40))
         btnSetCacheTime?.setTitle("设定缓存时间", forState: UIControlState.Normal)
         btnSetCacheTime?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnSetCacheTime?.addTarget(self, action: "setCacheTime:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnSetCacheTime?.addTarget(self, action: #selector(CacheTestViewController.setCacheTime(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnSetCacheTime!)
         
         lblString = UILabel(frame: CGRect(x: 20, y:CGRectGetMaxY(btnGet!.frame), width: UIScreen.mainScreen().bounds.width - 40, height: 40))
@@ -60,7 +60,7 @@ class CacheTestViewController: UIViewController {
         btnClearCache = UIButton(frame: CGRect(x:  10, y: CGRectGetMaxY(lblString!.frame), width: UIScreen.mainScreen().bounds.width / 3 , height: 40))
         btnClearCache?.setTitle("清空缓存", forState: UIControlState.Normal)
         btnClearCache?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnClearCache?.addTarget(self, action: "clearCache:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnClearCache?.addTarget(self, action: #selector(CacheTestViewController.clearCache(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnClearCache!)
         
     }

@@ -64,13 +64,13 @@ class ObjectTestViewController: UIViewController {
         btnSetStudent = UIButton(frame: CGRect(x: 10, y: CGRectGetMaxY(txtStreet!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
         btnSetStudent?.setTitle("设置", forState: UIControlState.Normal)
         btnSetStudent?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnSetStudent?.addTarget(self, action: "setStudent:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnSetStudent?.addTarget(self, action: #selector(ObjectTestViewController.setStudent(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnSetStudent!)
         
         btnGetStudent = UIButton(frame: CGRect(x: CGRectGetMaxX(btnSetStudent!.frame), y: CGRectGetMaxY(txtStreet!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
         btnGetStudent?.setTitle("取置", forState: UIControlState.Normal)
         btnGetStudent?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnGetStudent?.addTarget(self, action: "getStudent:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnGetStudent?.addTarget(self, action: #selector(ObjectTestViewController.getStudent(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnGetStudent!)
         
         lblStudent = UILabel(frame: CGRect(x: 10, y: CGRectGetMaxY(btnSetStudent!.frame), width: UIScreen.mainScreen().bounds.size.width - 20, height: 100))
@@ -81,20 +81,20 @@ class ObjectTestViewController: UIViewController {
         btnClear = UIButton(frame: CGRect(x:  CGRectGetMaxX(btnGetStudent!.frame), y: btnGetStudent!.frame.origin.y, width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
         btnClear?.setTitle("清空", forState: UIControlState.Normal)
         btnClear?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnClear?.addTarget(self, action: "clearStudent:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnClear?.addTarget(self, action: #selector(ObjectTestViewController.clearStudent(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnClear!)
         
         btnAddAbserver = UIButton(frame: CGRect(x:  10, y: CGRectGetMaxY(lblStudent!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
         btnAddAbserver?.setTitle("添加观察", forState: UIControlState.Normal)
         btnAddAbserver?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnAddAbserver?.addTarget(self, action: "addObserver:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnAddAbserver?.addTarget(self, action: #selector(ObjectTestViewController.addObserver(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnAddAbserver!)
         
         
         btnRemoveObserver = UIButton(frame: CGRect(x:  CGRectGetMaxX(btnAddAbserver!.frame) + 5, y: CGRectGetMaxY(lblStudent!.frame), width: UIScreen.mainScreen().bounds.size.width / 3 - 20, height: 40))
         btnRemoveObserver?.setTitle("移除观察", forState: UIControlState.Normal)
         btnRemoveObserver?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnRemoveObserver?.addTarget(self, action: "removeObserver:", forControlEvents: UIControlEvents.TouchUpInside)
+        btnRemoveObserver?.addTarget(self, action: #selector(ObjectTestViewController.removeObserver(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(btnRemoveObserver!)
     }
     
