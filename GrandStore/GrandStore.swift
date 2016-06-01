@@ -174,6 +174,50 @@ public class GrandStore<T> {
         return value
     }
     
+    func deleteWith(block:(item:AnyObject)->Bool)->Bool{
+        if let items = value as? NSArray {
+            var i = 0
+            let newItem = NSMutableArray(array: items)
+            while i < items.count {
+                if block(item: items[i]) {
+                    newItem.removeObjectAtIndex(i)
+                    self.Value = newItem as? T
+                    return true
+                }
+                i += 1
+            }
+        }
+        return false
+    }
+    
+    func replaceWith(item:AnyObject,block:(item:AnyObject)->Bool) -> Bool {
+        if let items = value as? NSArray {
+            let newItem = NSMutableArray(array: items)
+            var i = 0
+            while i < items.count {
+                if block(item: items[i]) {
+                    newItem.removeObjectAtIndex(i)
+                    newItem.insertObject(item, atIndex: i)
+                    self.Value = newItem as? T
+                    return true
+                }
+                i += 1
+            }
+        }
+        return false
+    }
+    
+    func appendWith(item:AnyObject) -> Bool {
+        if let items = value as? NSArray {
+            let newItem = NSMutableArray(array: items)
+            newItem.addObject(item)
+            self.Value = newItem as? T
+            return true
+        }
+        return false
+
+    }
+    
     func setCacheTime(cacheTime:Int){
         self.timeout = cacheTime
         if self.timeout > 0{
@@ -205,7 +249,7 @@ public class GrandStore<T> {
     }
     private func getStoreLevel()->Int
     {
-        if self.defaultValue! is Int || self.defaultValue! is String || self.defaultValue! is NSDate || self.defaultValue! is Bool || self.defaultValue! is Float || self.defaultValue! is Double || self.defaultValue! is NSData
+        if self.defaultValue! is NSNumber || self.defaultValue! is String || self.defaultValue! is NSDate || self.defaultValue! is NSData
         { //need test NSData can store in the NSUserDefaults, I whether it need store the NSArray or NSdictonary
             return 0
         }
