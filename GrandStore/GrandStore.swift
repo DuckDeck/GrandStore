@@ -174,7 +174,7 @@ public class GrandStore<T> {
         return value
     }
     
-    func deleteWith(block:(item:AnyObject)->Bool)->Bool{
+ public  func deleteWith(block:(item:AnyObject)->Bool)->Bool{
         if let items = value as? NSArray {
             var i = 0
             let newItem = NSMutableArray(array: items)
@@ -190,7 +190,7 @@ public class GrandStore<T> {
         return false
     }
     
-    func replaceWith(item:AnyObject,block:(item:AnyObject)->Bool) -> Bool {
+   public func replaceWith(item:AnyObject,block:(item:AnyObject)->Bool) -> Bool {
         if let items = value as? NSArray {
             let newItem = NSMutableArray(array: items)
             var i = 0
@@ -207,7 +207,7 @@ public class GrandStore<T> {
         return false
     }
     
-    func appendWith(item:AnyObject) -> Bool {
+  public  func appendWith(item:AnyObject) -> Bool {
         if let items = value as? NSArray {
             let newItem = NSMutableArray(array: items)
             newItem.addObject(item)
@@ -216,6 +216,27 @@ public class GrandStore<T> {
         }
         return false
 
+    }
+    
+    public func uniqueAppend(item:AnyObject,block:(item:AnyObject)->Bool) -> Bool {
+        if let items = value as? NSArray {
+            let newItem = NSMutableArray(array: items)
+            var i = 0
+            var flag = false
+            while i < items.count {
+                if block(item: items[i]) { //存在
+                    flag = true
+                    return false
+                }
+                i += 1
+            }
+            if !flag{
+                newItem.addObject(item)
+                self.Value = newItem as? T
+                return true
+            }
+        }
+        return false
     }
     
     func setCacheTime(cacheTime:Int){
