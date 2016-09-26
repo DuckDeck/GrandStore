@@ -7,17 +7,37 @@
 //
 
 import Foundation
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
 
-public class GrandStore<T> {
-    private var name:String!
-    private var value:T?
-    private var defaultValue:T?
-    private var hasValue:Bool = false
-    private var timeout:Int = 0
-    private var storeLevel:Int = 0
-    private var isTemp = false//只是放到内存里临时保存
-    private var timeoutDate:NSDate?
-    private var observerBlock:((observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void)?
+fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l <= r
+  default:
+    return !(rhs < lhs)
+  }
+}
+
+
+open class GrandStore<T> {
+    fileprivate var name:String!
+    fileprivate var value:T?
+    fileprivate var defaultValue:T?
+    fileprivate var hasValue:Bool = false
+    fileprivate var timeout:Int = 0
+    fileprivate var storeLevel:Int = 0
+    fileprivate var isTemp = false//只是放到内存里临时保存
+    fileprivate var timeoutDate:Date?
+    fileprivate var observerBlock:((_ observerObject:AnyObject,_ observerKey:String,_ oldValue:AnyObject,_ newValue:AnyObject)->Void)?
    public  init(name:String,defaultValue:T) {
         self.name = name;
         self.defaultValue = defaultValue;
@@ -32,7 +52,7 @@ public class GrandStore<T> {
         self.defaultValue = defaultValue;
         self.timeout = timeout
         if self.timeout > 0{
-            timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+            timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
         }
         else{
             isTemp = true
@@ -43,7 +63,7 @@ public class GrandStore<T> {
     
     
     
-  public  var Value:T?
+  open  var Value:T?
         {
         get
         {
@@ -62,16 +82,16 @@ public class GrandStore<T> {
                 else{
                 if storeLevel == 0 //如果存储等级为0,那么从userdefault取
                 {
-                    if GrandStore.settingData().objectForKey(name) == nil //如果取不出来
+                    if GrandStore.settingData().object(forKey: name) == nil //如果取不出来
                     {
                         self.value = self.defaultValue;
-                        GrandStore.settingData().setObject(self.value! as? AnyObject, forKey: self.name)
+                        GrandStore.settingData().set(self.value!, forKey: self.name)
                         GrandStore.settingData().synchronize()
                         hasValue = true
                     }
                     else
                     {
-                        self.value = GrandStore.settingData().objectForKey(self.name) as? T
+                        self.value = GrandStore.settingData().object(forKey: self.name) as? T
                         hasValue = true
                     }
                 }
@@ -82,7 +102,7 @@ public class GrandStore<T> {
                         if timeoutDate != nil{
                             if self.value is NSCoding{
                                 GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
-                                timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                                timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
                             }
                             else{
                                 assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
@@ -116,7 +136,7 @@ public class GrandStore<T> {
                         {
                             self.value = self.defaultValue
                         }
-                        call(observerObject: self,observerKey: self.name,oldValue: self.value as! AnyObject,newValue: newValue as! AnyObject)
+                        call(self,self.name,self.value as AnyObject,newValue as AnyObject)
                     }
 //                }
 //            }
@@ -127,10 +147,10 @@ public class GrandStore<T> {
             else{
              if storeLevel == 0
             {
-                GrandStore.settingData().setObject(self.value! as? AnyObject, forKey: self.name)
+                GrandStore.settingData().set(self.value!, forKey: self.name)
                 GrandStore.settingData().synchronize()
                 if timeoutDate != nil{
-                    timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                    timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
                 }
             }
             if storeLevel == 1  //这是用归档保存, 日后处理
@@ -138,7 +158,7 @@ public class GrandStore<T> {
                 if timeoutDate != nil{
                     if self.value is NSCoding{
                         GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
-                        timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+                        timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
                     }
                     else{
                         assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
@@ -159,28 +179,28 @@ public class GrandStore<T> {
         }
     }
     
-    private var isExpire:Bool{
+    fileprivate var isExpire:Bool{
         get{
             if timeoutDate == nil{
                 return false
             }
             else{
-                return NSDate().compare(timeoutDate!) == NSComparisonResult.OrderedDescending
+                return Date().compare(timeoutDate!) == ComparisonResult.orderedDescending
             }
         }
     }
     
-  public  var wilfulValue:T?{
+  open  var wilfulValue:T?{
         return value
     }
     
- public  func deleteWith(block:(item:AnyObject)->Bool)->Bool{
+ open  func deleteWith(_ block:(_ item:AnyObject)->Bool)->Bool{
         if let items = value as? NSArray {
             var i = 0
             let newItem = NSMutableArray(array: items)
             while i < items.count {
-                if block(item: items[i]) {
-                    newItem.removeObjectAtIndex(i)
+                if block(items[i] as AnyObject) {
+                    newItem.removeObject(at: i)
                     self.Value = newItem as? T
                     return true
                 }
@@ -190,14 +210,14 @@ public class GrandStore<T> {
         return false
     }
     
-   public func replaceWith(item:AnyObject,block:(item:AnyObject)->Bool) -> Bool {
+   open func replaceWith(_ item:AnyObject,block:(_ item:AnyObject)->Bool) -> Bool {
         if let items = value as? NSArray {
             let newItem = NSMutableArray(array: items)
             var i = 0
             while i < items.count {
-                if block(item: items[i]) {
-                    newItem.removeObjectAtIndex(i)
-                    newItem.insertObject(item, atIndex: i)
+                if block(items[i] as AnyObject) {
+                    newItem.removeObject(at: i)
+                    newItem.insert(item, at: i)
                     self.Value = newItem as? T
                     return true
                 }
@@ -207,10 +227,10 @@ public class GrandStore<T> {
         return false
     }
     
-  public  func appendWith(item:AnyObject) -> Bool {
+  open  func appendWith(_ item:AnyObject) -> Bool {
         if let items = value as? NSArray {
             let newItem = NSMutableArray(array: items)
-            newItem.addObject(item)
+            newItem.add(item)
             self.Value = newItem as? T
             return true
         }
@@ -218,20 +238,20 @@ public class GrandStore<T> {
 
     }
     
-    public func uniqueAppend(item:AnyObject,block:(item:AnyObject)->Bool) -> Bool {
+    open func uniqueAppend(_ item:AnyObject,block:(_ item:AnyObject)->Bool) -> Bool {
         if let items = value as? NSArray {
             let newItem = NSMutableArray(array: items)
             var i = 0
             var flag = false
             while i < items.count {
-                if block(item: items[i]) { //存在
+                if block(items[i] as AnyObject) { //存在
                     flag = true
                     return false
                 }
                 i += 1
             }
             if !flag{
-                newItem.addObject(item)
+                newItem.add(item)
                 self.Value = newItem as? T
                 return true
             }
@@ -239,47 +259,47 @@ public class GrandStore<T> {
         return false
     }
     
-    func setCacheTime(cacheTime:Int){
+    func setCacheTime(_ cacheTime:Int){
         self.timeout = cacheTime
         if self.timeout > 0{
-            timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
+            timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
         }
     }
     
-    public func clear(){
+    open func clear(){
 //        GrandStoreSetting.sharedObserverKey.enumerateObjectsUsingBlock { (obj, idx, stop) -> Void in
 //            if obj.isEqualToString(self.name){
             if let call = self.observerBlock{
-                call(observerObject: self,observerKey: self.name,oldValue: self.value as! AnyObject,newValue: self.defaultValue as! AnyObject)
+                call(self,self.name,self.value as AnyObject,self.defaultValue as AnyObject)
             }
 //            }
 //        }
-        GrandStore.settingData().removeObjectForKey(self.name)
+        GrandStore.settingData().removeObject(forKey: self.name)
         GrandCache.globleCache.removeCacheForKey(self.name)
         hasValue = false
     }
     
     
-  public  func addObserver(block:(observerObject:AnyObject,observerKey:String,oldValue:AnyObject,newValue:AnyObject)->Void){
+  open  func addObserver(_ block:@escaping (_ observerObject:AnyObject,_ observerKey:String,_ oldValue:AnyObject,_ newValue:AnyObject)->Void){
         //GrandStoreSetting.sharedObserverKey.addObject(self.name)
         self.observerBlock = block
     }
-  public  func removeObserver(){
+  open  func removeObserver(){
        // GrandStoreSetting.sharedObserverKey.removeObject(self.name)
         self.observerBlock = nil
     }
-    private func getStoreLevel()->Int
+    fileprivate func getStoreLevel()->Int
     {
-        if self.defaultValue! is NSNumber || self.defaultValue! is String || self.defaultValue! is NSDate || self.defaultValue! is NSData
+        if self.defaultValue! is NSNumber || self.defaultValue! is String || self.defaultValue! is Date || self.defaultValue! is Data
         { //need test NSData can store in the NSUserDefaults, I whether it need store the NSArray or NSdictonary
             return 0
         }
         return 1
     }
     
-    private static func settingData()->NSUserDefaults
+    fileprivate static func settingData()->UserDefaults
     {
-        return NSUserDefaults.standardUserDefaults()
+        return UserDefaults.standard
     }
     //在Swift中,当需要把一个类转为泛型类时,Swift必需知道这个泛型类是个什么样的类,不然就不行,现在Swift又没有KVC和KVO,所以很多OBJC的功能目前实现不了,以后看有没有机会实现
 }
@@ -351,76 +371,77 @@ public class GrandStore<T> {
 
 class GrandCache {
     // Now turn EGOCahce to swift laguage
-    private static let sharedInstance = GrandCache()
+    fileprivate static let sharedInstance = GrandCache()
     class  var globleCache:GrandCache {
         return sharedInstance
     }
     
-    var cacheInfoQueue:dispatch_queue_t
-    var frozenCacheInfoQueue:dispatch_queue_t
-    var diskQueue:dispatch_queue_t
-    var cacheInfo:[String:NSDate]
+    var cacheInfoQueue:DispatchQueue
+    var frozenCacheInfoQueue:DispatchQueue
+    var diskQueue:DispatchQueue
+    var cacheInfo:[String:Date]
     var directory:String
     var needSave:Bool = false
-    var frozenCacheInfo:[String:NSDate]
-    var defaultTimeoutInterval:NSTimeInterval = Double(Int.max)
+    var frozenCacheInfo:[String:Date]
+    var defaultTimeoutInterval:TimeInterval = Double(Int.max)
     init(){
-        var cacheDirectory:NSString = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true)[0]
-        let oldCacheDirectroy = (cacheDirectory.stringByAppendingPathComponent(NSProcessInfo.processInfo().processName) as NSString).stringByAppendingPathComponent("GrandStore")
-        if NSFileManager.defaultManager().fileExistsAtPath(oldCacheDirectroy){
-            if let _ = try? NSFileManager.defaultManager().removeItemAtPath(oldCacheDirectroy){
+        var cacheDirectory:NSString = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0] as NSString
+        let oldCacheDirectroy = (cacheDirectory.appendingPathComponent(ProcessInfo.processInfo.processName) as NSString).appendingPathComponent("GrandStore")
+        if FileManager.default.fileExists(atPath: oldCacheDirectroy){
+            if let _ = try? FileManager.default.removeItem(atPath: oldCacheDirectroy){
                 //do nothing
             }
         }
-        cacheDirectory = (cacheDirectory.stringByAppendingPathComponent(NSBundle.mainBundle().bundleIdentifier!) as NSString).stringByAppendingPathComponent("GrandStore")
+        cacheDirectory = (cacheDirectory.appendingPathComponent(Bundle.main.bundleIdentifier!) as NSString).appendingPathComponent("GrandStore") as NSString
         
-        cacheInfoQueue = dispatch_queue_create("DuckDeck.GrandStore.Info", DISPATCH_QUEUE_SERIAL)
-        var priority = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0) //what is this suppose to do......
-        dispatch_set_target_queue(priority, cacheInfoQueue)
+        cacheInfoQueue = DispatchQueue(label: "DuckDeck.GrandStore.Info", attributes: [])
+        var priority = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive) //what is this suppose to do......
         
-        frozenCacheInfoQueue = dispatch_queue_create("DuckDeck.GrandStore.Frozen", DISPATCH_QUEUE_SERIAL)
-        priority = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-        dispatch_set_target_queue(priority, frozenCacheInfoQueue)
+        priority.setTarget(queue: cacheInfoQueue)
         
-        diskQueue = dispatch_queue_create("DuckDeck.GrandStore.Disk", DISPATCH_QUEUE_CONCURRENT)
-        priority = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
-        dispatch_set_target_queue(priority, diskQueue)
+        frozenCacheInfoQueue = DispatchQueue(label: "DuckDeck.GrandStore.Frozen", attributes: [])
+        priority = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive)
+        priority.setTarget(queue: frozenCacheInfoQueue)
+        
+        diskQueue = DispatchQueue(label: "DuckDeck.GrandStore.Disk", attributes: DispatchQueue.Attributes.concurrent)
+        priority = DispatchQueue.global(qos: DispatchQoS.QoSClass.userInteractive)
+        priority.setTarget(queue: diskQueue)
         
         directory = cacheDirectory as String
         
-        if let  tempCacheInfo = NSDictionary(contentsOfFile: directory + "GrandStore.plist") as? [String:NSDate]{
+        if let  tempCacheInfo = NSDictionary(contentsOfFile: directory + "GrandStore.plist") as? [String:Date]{
             cacheInfo = tempCacheInfo
         }
         else{
-            cacheInfo = [String:NSDate]()
+            cacheInfo = [String:Date]()
         }
-        if let _ = try? NSFileManager.defaultManager().createDirectoryAtPath(directory, withIntermediateDirectories: true, attributes: nil){
+        if let _ = try? FileManager.default.createDirectory(atPath: directory, withIntermediateDirectories: true, attributes: nil){
             //do nothing
         }
-        let now = NSDate().timeIntervalSinceReferenceDate
+        let now = Date().timeIntervalSinceReferenceDate
         var removedKeys = [String]()
         for key in cacheInfo.keys{
             if cacheInfo[key]?.timeIntervalSinceReferenceDate <= now{
-                if let  _  = try? NSFileManager.defaultManager().removeItemAtPath(directory.stringByAppendingString(key.stringByReplacingOccurrencesOfString("/", withString: "_"))) {
+                if let  _  = try? FileManager.default.removeItem(atPath: directory + key.replacingOccurrences(of: "/", with: "_")) {
                     removedKeys.append(key)
                 }
             }
         }
         for key in removedKeys{
-            cacheInfo.removeValueForKey(key)
+            cacheInfo.removeValue(forKey: key)
         }
         frozenCacheInfo = cacheInfo
     }
     
     func clearCache(){
-        dispatch_sync(cacheInfoQueue) { () -> Void in
+        cacheInfoQueue.sync { () -> Void in
             for key in self.cacheInfo.keys{
-                if let  _  = try? NSFileManager.defaultManager().removeItemAtPath(self.cachePathForKey(self.directory, key: key)){
+                if let  _  = try? FileManager.default.removeItem(atPath: self.cachePathForKey(self.directory, key: key)){
                     
                 }
             }
             self.cacheInfo.removeAll()
-            dispatch_sync(self.frozenCacheInfoQueue, { () -> Void in
+            self.frozenCacheInfoQueue.sync(execute: { () -> Void in
                 self.frozenCacheInfo = self.cacheInfo
             })
             self.setNeedSave()
@@ -428,51 +449,51 @@ class GrandCache {
     }
     
     func setNeedSave(){
-        dispatch_async(cacheInfoQueue) { () -> Void in
+        cacheInfoQueue.async { () -> Void in
             if self.needSave{
                 return
             }
             self.needSave = true
             let delayInSeconds = 0.5
-            let popTime = dispatch_time(DISPATCH_TIME_NOW, Int64(delayInSeconds * Double(NSEC_PER_SEC)))
-            dispatch_after(popTime, self.cacheInfoQueue, { () -> Void in
+            let popTime = DispatchTime.now() + Double(Int64(delayInSeconds * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+            self.cacheInfoQueue.asyncAfter(deadline: popTime, execute: { () -> Void in
                 if !self.needSave {
                     return;
                 }
-                (self.cacheInfo as NSDictionary).writeToFile(self.cachePathForKey(self.directory, key: "GrandStore.plist"), atomically: true)
+                (self.cacheInfo as NSDictionary).write(toFile: self.cachePathForKey(self.directory, key: "GrandStore.plist"), atomically: true)
                 self.needSave = false
             })
         }
     }
     
     
-    func removeCacheForKey(key:String){
+    func removeCacheForKey(_ key:String){
         if key == "GrandStore.plist"{
             return
         }
-        dispatch_async(diskQueue) { () -> Void in
-            if let  _  = try?  NSFileManager.defaultManager().removeItemAtPath(self.cachePathForKey(self.directory, key: key)){
+        diskQueue.async { () -> Void in
+            if let  _  = try?  FileManager.default.removeItem(atPath: self.cachePathForKey(self.directory, key: key)){
                 
             }
         }
         self.setCacheTimeoutInterval(0, key: key)
     }
     
-    func hasCacheForKey(key:String)->Bool{
+    func hasCacheForKey(_ key:String)->Bool{
         if let date = dateForKey(key){
             if date.timeIntervalSinceReferenceDate < CFAbsoluteTimeGetCurrent(){
                 return false
             }
-            return NSFileManager.defaultManager().fileExistsAtPath(cachePathForKey(self.directory, key: key))
+            return FileManager.default.fileExists(atPath: cachePathForKey(self.directory, key: key))
         }
         else{
             return false
         }
     }
     
-    func dateForKey(key:String)->NSDate?{
-        var date:NSDate? = nil
-        dispatch_sync(self.frozenCacheInfoQueue) { () -> Void in   //why shoudl do this, that's weird,mey be this is for thread lock
+    func dateForKey(_ key:String)->Date?{
+        var date:Date? = nil
+        self.frozenCacheInfoQueue.sync { () -> Void in   //why shoudl do this, that's weird,mey be this is for thread lock
             date = self.frozenCacheInfo[key]
         }
         return date
@@ -480,7 +501,7 @@ class GrandCache {
     
     func allKeys()->[String]?{
         var keys:[String]? = nil
-        dispatch_sync(self.frozenCacheInfoQueue) { () -> Void in
+        self.frozenCacheInfoQueue.sync { () -> Void in
             for key in self.frozenCacheInfo.keys{ //目前只有这样 了
                 keys?.append(key)
             }
@@ -488,26 +509,26 @@ class GrandCache {
         return keys
     }
     
-    func setCacheTimeoutInterval(timeoutInterval:NSTimeInterval,key:String){
-        let date:NSDate? = timeoutInterval > 0 ? NSDate(timeIntervalSinceNow: timeoutInterval) : nil
-        dispatch_sync(frozenCacheInfoQueue) { () -> Void in
+    func setCacheTimeoutInterval(_ timeoutInterval:TimeInterval,key:String){
+        let date:Date? = timeoutInterval > 0 ? Date(timeIntervalSinceNow: timeoutInterval) : nil
+        frozenCacheInfoQueue.sync { () -> Void in
             if date != nil{
                 self.frozenCacheInfo[key] = date!
             }
             else{
-                self.frozenCacheInfo.removeValueForKey(key)
+                self.frozenCacheInfo.removeValue(forKey: key)
             }
         }
         
-        dispatch_async(cacheInfoQueue) { () -> Void in
+        cacheInfoQueue.async { () -> Void in
             if date != nil{
                 self.cacheInfo[key] = date
             }
             else
             {
-                self.cacheInfo.removeValueForKey(key)
+                self.cacheInfo.removeValue(forKey: key)
             }
-            dispatch_sync(self.frozenCacheInfoQueue, { () -> Void in
+            self.frozenCacheInfoQueue.sync(execute: { () -> Void in
                 self.frozenCacheInfo = self.cacheInfo
             })
             self.setNeedSave()
@@ -515,37 +536,37 @@ class GrandCache {
     }
     
     
-    func copyFilePath(filePath:String,key:String){
+    func copyFilePath(_ filePath:String,key:String){
         coprFilePath(filePath, key: key, timeoutInterval: defaultTimeoutInterval)
     }
     
-    func coprFilePath(filePath:String,key:String,timeoutInterval:NSTimeInterval){
-        dispatch_async(diskQueue) { () -> Void in
-            if let _ = try? NSFileManager.defaultManager().copyItemAtPath(filePath, toPath: self.cachePathForKey(self.directory, key: key)){
+    func coprFilePath(_ filePath:String,key:String,timeoutInterval:TimeInterval){
+        diskQueue.async { () -> Void in
+            if let _ = try? FileManager.default.copyItem(atPath: filePath, toPath: self.cachePathForKey(self.directory, key: key)){
                 
             }
         }
         setCacheTimeoutInterval(timeoutInterval, key: key)
     }
     
-    func setData(data:NSData,key:String){
+    func setData(_ data:Data,key:String){
         setData(data, key: key, timeoutInterval: defaultTimeoutInterval)
     }
     
-    func setData(data:NSData,key:String,timeoutInterval:NSTimeInterval){
+    func setData(_ data:Data,key:String,timeoutInterval:TimeInterval){
         if key == "GrandStore.plist"{
             return
         }
         let cachePath = cachePathForKey(directory, key: key)
-        dispatch_async(self.diskQueue) { () -> Void in
-            data.writeToFile(cachePath, atomically: true)
+        self.diskQueue.async { () -> Void in
+            try? data.write(to: URL(fileURLWithPath: cachePath), options: [.atomic])
         }
         setCacheTimeoutInterval(timeoutInterval, key: key)
     }
     
-    func dataForKey(key:String)->NSData?{
+    func dataForKey(_ key:String)->Data?{
         if hasCacheForKey(key){
-            if let data = try? NSData(contentsOfFile: cachePathForKey(directory, key: key), options: NSDataReadingOptions.DataReadingMappedIfSafe){
+            if let data = try? Data(contentsOf: URL(fileURLWithPath: cachePathForKey(directory, key: key)), options: NSData.ReadingOptions.mappedIfSafe){
                 return data
             }
             else
@@ -558,9 +579,9 @@ class GrandCache {
         }
     }
     
-    func stringForKey(key:String)->String?{
+    func stringForKey(_ key:String)->String?{
         if let data = self.dataForKey(key){
-            return String(data: data, encoding: NSUTF8StringEncoding)
+            return String(data: data, encoding: String.Encoding.utf8)
         }
         else
         {
@@ -568,21 +589,21 @@ class GrandCache {
         }
     }
     
-    func setString(str:String,key:String){
+    func setString(_ str:String,key:String){
         self.setString(str, key: key, timeoutInterval: defaultTimeoutInterval)
     }
     
-    func setString(str:String,key:String,timeoutInterval:NSTimeInterval){
-        self.setData(str.dataUsingEncoding(NSUTF8StringEncoding)!, key: key, timeoutInterval: timeoutInterval)
+    func setString(_ str:String,key:String,timeoutInterval:TimeInterval){
+        self.setData(str.data(using: String.Encoding.utf8)!, key: key, timeoutInterval: timeoutInterval)
     }
     
     //Image就不要了
     //plist 也不要了
     //Object
-    func objectForKey(key:String)-> NSCoding?{
+    func objectForKey(_ key:String)-> NSCoding?{
         if self.hasCacheForKey(key){
             if let data = self.dataForKey(key){
-                return NSKeyedUnarchiver.unarchiveObjectWithData(data) as? NSCoding
+                return NSKeyedUnarchiver.unarchiveObject(with: data) as? NSCoding
             }
             else{
                 return nil
@@ -591,17 +612,17 @@ class GrandCache {
         return nil
     }
     
-    func setObject(obj:NSCoding,key:String){
+    func setObject(_ obj:NSCoding,key:String){
         setObject(obj, key: key, timeoutInterval: defaultTimeoutInterval)
     }
     
-    func setObject(obj:NSCoding,key:String,timeoutInterval:NSTimeInterval){
-        self.setData(NSKeyedArchiver.archivedDataWithRootObject(obj), key: key, timeoutInterval: timeoutInterval)
+    func setObject(_ obj:NSCoding,key:String,timeoutInterval:TimeInterval){
+        self.setData(NSKeyedArchiver.archivedData(withRootObject: obj), key: key, timeoutInterval: timeoutInterval)
     }
     
     
-    func cachePathForKey(directory:String,key:String)->String{
-       let path = key.stringByReplacingOccurrencesOfString("/", withString: "_")
-        return directory.stringByAppendingString(path)
+    func cachePathForKey(_ directory:String,key:String)->String{
+       let path = key.replacingOccurrences(of: "/", with: "_")
+        return directory + path
     }
 }

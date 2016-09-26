@@ -19,76 +19,76 @@ class CacheTestViewController: UIViewController {
     var btnClearCache:UIButton?
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor.whiteColor()
-        txtString = UITextField(frame: CGRect(x: 20, y: 67, width: UIScreen.mainScreen().bounds.width - 40, height: 40))
-        txtString?.borderStyle = UITextBorderStyle.RoundedRect
+        view.backgroundColor = UIColor.white
+        txtString = UITextField(frame: CGRect(x: 20, y: 67, width: UIScreen.main.bounds.width - 40, height: 40))
+        txtString?.borderStyle = UITextBorderStyle.roundedRect
         txtString?.placeholder = "你要设定的值"
         txtString?.text = "你要设置的值"
         view.addSubview(txtString!)
         
-        txtTimeout = UITextField(frame: CGRect(x: 20, y: CGRectGetMaxY(txtString!.frame) + 10, width: UIScreen.mainScreen().bounds.width - 40, height: 40))
-        txtTimeout?.borderStyle = UITextBorderStyle.RoundedRect
-        txtTimeout?.keyboardType = UIKeyboardType.NumberPad
+        txtTimeout = UITextField(frame: CGRect(x: 20, y: txtString!.frame.maxY + 10, width: UIScreen.main.bounds.width - 40, height: 40))
+        txtTimeout?.borderStyle = UITextBorderStyle.roundedRect
+        txtTimeout?.keyboardType = UIKeyboardType.numberPad
         txtTimeout?.placeholder = "缓存时间"
         view.addSubview(txtTimeout!)
         
-        btnSet = UIButton(frame: CGRect(x: 10, y: CGRectGetMaxY(txtTimeout!.frame), width: UIScreen.mainScreen().bounds.width / 3 - 20, height: 40))
-        btnSet?.setTitle("设值", forState: UIControlState.Normal)
-        btnSet?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnSet?.addTarget(self, action: #selector(CacheTestViewController.setString(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        btnSet = UIButton(frame: CGRect(x: 10, y: txtTimeout!.frame.maxY, width: UIScreen.main.bounds.width / 3 - 20, height: 40))
+        btnSet?.setTitle("设值", for: UIControlState())
+        btnSet?.setTitleColor(UIColor.black, for: UIControlState())
+        btnSet?.addTarget(self, action: #selector(CacheTestViewController.setString(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(btnSet!)
         
         
-        btnGet = UIButton(frame: CGRect(x: CGRectGetMaxX(btnSet!.frame) + 10, y: CGRectGetMaxY(txtTimeout!.frame), width: UIScreen.mainScreen().bounds.width / 3 - 20, height: 40))
-        btnGet?.setTitle("取值", forState: UIControlState.Normal)
-        btnGet?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnGet?.addTarget(self, action: #selector(CacheTestViewController.getString(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        btnGet = UIButton(frame: CGRect(x: btnSet!.frame.maxX + 10, y: txtTimeout!.frame.maxY, width: UIScreen.main.bounds.width / 3 - 20, height: 40))
+        btnGet?.setTitle("取值", for: UIControlState())
+        btnGet?.setTitleColor(UIColor.black, for: UIControlState())
+        btnGet?.addTarget(self, action: #selector(CacheTestViewController.getString(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(btnGet!)
         
-        btnSetCacheTime = UIButton(frame: CGRect(x: CGRectGetMaxX(btnGet!.frame) + 10, y: CGRectGetMaxY(txtTimeout!.frame), width: UIScreen.mainScreen().bounds.width / 3 , height: 40))
-        btnSetCacheTime?.setTitle("设定缓存时间", forState: UIControlState.Normal)
-        btnSetCacheTime?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnSetCacheTime?.addTarget(self, action: #selector(CacheTestViewController.setCacheTime(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        btnSetCacheTime = UIButton(frame: CGRect(x: btnGet!.frame.maxX + 10, y: txtTimeout!.frame.maxY, width: UIScreen.main.bounds.width / 3 , height: 40))
+        btnSetCacheTime?.setTitle("设定缓存时间", for: UIControlState())
+        btnSetCacheTime?.setTitleColor(UIColor.black, for: UIControlState())
+        btnSetCacheTime?.addTarget(self, action: #selector(CacheTestViewController.setCacheTime(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(btnSetCacheTime!)
         
-        lblString = UILabel(frame: CGRect(x: 20, y:CGRectGetMaxY(btnGet!.frame), width: UIScreen.mainScreen().bounds.width - 40, height: 40))
-        lblString?.textColor = UIColor.blackColor()
+        lblString = UILabel(frame: CGRect(x: 20, y:btnGet!.frame.maxY, width: UIScreen.main.bounds.width - 40, height: 40))
+        lblString?.textColor = UIColor.black
         lblString?.numberOfLines = 0
-        lblString?.font = UIFont.systemFontOfSize(12)
+        lblString?.font = UIFont.systemFont(ofSize: 12)
         view.addSubview(lblString!)
         
-        btnClearCache = UIButton(frame: CGRect(x:  10, y: CGRectGetMaxY(lblString!.frame), width: UIScreen.mainScreen().bounds.width / 3 , height: 40))
-        btnClearCache?.setTitle("清空缓存", forState: UIControlState.Normal)
-        btnClearCache?.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        btnClearCache?.addTarget(self, action: #selector(CacheTestViewController.clearCache(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        btnClearCache = UIButton(frame: CGRect(x:  10, y: lblString!.frame.maxY, width: UIScreen.main.bounds.width / 3 , height: 40))
+        btnClearCache?.setTitle("清空缓存", for: UIControlState())
+        btnClearCache?.setTitleColor(UIColor.black, for: UIControlState())
+        btnClearCache?.addTarget(self, action: #selector(CacheTestViewController.clearCache(_:)), for: UIControlEvents.touchUpInside)
         view.addSubview(btnClearCache!)
         
     }
     
-    func setString(sender:UIButton)
+    func setString(_ sender:UIButton)
     {
         if let txt = txtString?.text{
             demo1.Value = txt
         }
     }
     
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         txtTimeout?.resignFirstResponder()
         txtString?.resignFirstResponder()
     }
     
-    func getString(sender:UIButton)
+    func getString(_ sender:UIButton)
     {
         lblString?.text = demo1.Value
     }
     
-    func setCacheTime(sender:UIButton){
+    func setCacheTime(_ sender:UIButton){
         if txtTimeout?.text != ""{
             demo1.setCacheTime(Int(txtTimeout!.text!)!)
         }
         
     }
-    func clearCache(sender:UIButton){
+    func clearCache(_ sender:UIButton){
         demo1.clear()
         lblString?.text = "成功清空缓存"
     }
