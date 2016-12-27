@@ -14,7 +14,7 @@ GrandStore is an intuitionistic and powerful iOS store tool. It use variable nam
 
 ##Requirements 
 
-Xcode 7.1 and iOS 8.0(the lasted swift grammar,Swift 2.1)
+Xcode 8 and iOS 8.0(the lasted swift grammar,Swift 3)
 ####Please note: this class can only support Pure Swift Project
 
 ##Installation
@@ -91,7 +91,7 @@ Any issue or problem please contact me:3421902@qq.com, I will be happy fix it
 
 ##系统要求 
 
-Xcode 7.1 and iOS 8.0(最新的Swift语法,Swift2.1)
+Xcode 8 and iOS 8.0(最新的Swift语法,Swift3)
 ####请注意,这个类只适用了纯Swift项目,Objc类不能调用这个类
 ##安装
 `如果你使用cocopods, 则pod 'GrandStore' 再安装即可.然后再 pod install`
