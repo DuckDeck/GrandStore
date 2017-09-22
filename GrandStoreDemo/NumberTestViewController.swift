@@ -51,6 +51,6 @@ class NumberTestViewController: UIViewController {
     
     func getString(_ sender:UIButton)
     {
-        lblString?.text = "\(demo2.Value)"
+        lblString?.text = "\(String(describing: demo2.Value))"
     }
 }
