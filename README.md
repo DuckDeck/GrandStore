@@ -1,6 +1,6 @@
 
 # GrandStore
-=== 
+
 ## GrandStore是一个直观且强大的iOS存储库，他用变量名来保存任何类型
 
 ## 关键特点
