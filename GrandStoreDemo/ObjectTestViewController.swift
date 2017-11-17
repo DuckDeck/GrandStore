@@ -108,7 +108,7 @@ class ObjectTestViewController: UIViewController {
         
     }
     
-    func setStudent(_ sender:UIButton){
+    @objc func setStudent(_ sender:UIButton){
         if txtName?.text == ""{
             lblStudent?.text = "你要填写名字"
             return
@@ -133,7 +133,7 @@ class ObjectTestViewController: UIViewController {
         let student = Student(name: txtName!.text!, age: Int(txtAge!.text!)!, address: address)
         self.stu.Value = student
     }
-    func getStudent(_ sender:UIButton){
+    @objc func getStudent(_ sender:UIButton){
         if stu.Value?.name != ""{
             let student = stu.Value!
             lblStudent?.text = "Name:\(student.name) id:\(student.id) age:\(student.age) address:\(student.address.provice)-\(student.address.city)-\(student.address.district)-\(student.address.street) "
@@ -142,12 +142,12 @@ class ObjectTestViewController: UIViewController {
             lblStudent?.text = "";
         }
     }
-    func clearStudent(_ sender:UIButton)
+    @objc func clearStudent(_ sender:UIButton)
     {
         stu.clear()
         lblStudent?.text = "已经清空"
     }
-    func addObserver(_ sender:UIButton){
+    @objc func addObserver(_ sender:UIButton){
         stu.addObserver { (observerObject, observerKey, oldValue, newValue) -> Void in
               self.lblStudent?.text = "old:\(oldValue.debugDescription), new:\(newValue.debugDescription)"
         }
@@ -155,7 +155,7 @@ class ObjectTestViewController: UIViewController {
      
     }
     
-    func removeObserver(_ sender:UIButton){
+    @objc func removeObserver(_ sender:UIButton){
         stu.removeObserver()
          lblStudent?.text = "已经移除观察"
     }

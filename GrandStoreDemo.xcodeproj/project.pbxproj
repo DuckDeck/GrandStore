@@ -139,8 +139,8 @@
 				TargetAttributes = {
 					A2F0959A1C2A28F3008C84F4 = {
 						CreatedOnToolsVersion = 7.2;
-						DevelopmentTeam = APF8Y4T67A;
-						LastSwiftMigration = 0800;
+						DevelopmentTeam = 3YCGH6CCXA;
+						LastSwiftMigration = 0910;
 					};
 				};
 			};
@@ -310,13 +310,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = APF8Y4T67A;
+				DEVELOPMENT_TEAM = 3YCGH6CCXA;
 				INFOPLIST_FILE = GrandStoreDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Tyrant.GrandStoreDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = stan.GrandStoreDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -324,13 +325,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = APF8Y4T67A;
+				DEVELOPMENT_TEAM = 3YCGH6CCXA;
 				INFOPLIST_FILE = GrandStoreDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Tyrant.GrandStoreDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = stan.GrandStoreDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

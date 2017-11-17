@@ -65,7 +65,7 @@ class CacheTestViewController: UIViewController {
         
     }
     
-    func setString(_ sender:UIButton)
+    @objc func setString(_ sender:UIButton)
     {
         if let txt = txtString?.text{
             demo1.Value = txt
@@ -77,18 +77,18 @@ class CacheTestViewController: UIViewController {
         txtString?.resignFirstResponder()
     }
     
-    func getString(_ sender:UIButton)
+    @objc func getString(_ sender:UIButton)
     {
         lblString?.text = demo1.Value
     }
     
-    func setCacheTime(_ sender:UIButton){
+    @objc func setCacheTime(_ sender:UIButton){
         if txtTimeout?.text != ""{
             demo1.setCacheTime(Int(txtTimeout!.text!)!)
         }
         
     }
-    func clearCache(_ sender:UIButton){
+    @objc func clearCache(_ sender:UIButton){
         demo1.clear()
         lblString?.text = "成功清空缓存"
     }

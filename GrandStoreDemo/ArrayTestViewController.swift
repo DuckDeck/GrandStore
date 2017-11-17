@@ -41,7 +41,7 @@ class ArrayTestViewController: UIViewController {
         lblString?.textColor = UIColor.black
         view.addSubview(lblString!)
     }
-    func setString(_ sender:UIButton)
+    @objc func setString(_ sender:UIButton)
     {
         if let txt = txtString?.text{
 //            var arr = arrTest.Value
@@ -52,7 +52,7 @@ class ArrayTestViewController: UIViewController {
         }
     }
     
-    func getString(_ sender:UIButton)
+    @objc func getString(_ sender:UIButton)
     {
         var str = ""
         for s in arrTest.Value!{

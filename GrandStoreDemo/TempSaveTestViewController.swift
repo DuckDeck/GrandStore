@@ -42,14 +42,14 @@ class TempSaveTestViewController: UIViewController {
         view.addSubview(lblString!)
     }
     
-    func setString(_ sender:UIButton)
+    @objc func setString(_ sender:UIButton)
     {
         if let txt = txtString?.text{
             demoTemp.Value = txt
         }
     }
     
-    func getString(_ sender:UIButton)
+    @objc func getString(_ sender:UIButton)
     {
         lblString?.text = demoTemp.Value
     }

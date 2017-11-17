@@ -42,14 +42,14 @@ class NumberTestViewController: UIViewController {
         view.addSubview(lblString!)
     }
     
-    func setString(_ sender:UIButton)
+    @objc func setString(_ sender:UIButton)
     {
         if let txt = txtString?.text{
             demo2.Value = Double(txt)
         }
     }
     
-    func getString(_ sender:UIButton)
+    @objc func getString(_ sender:UIButton)
     {
         lblString?.text = "\(String(describing: demo2.Value))"
     }
