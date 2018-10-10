@@ -23,16 +23,16 @@ class StringTestViewController: UIViewController {
         view.addSubview(txtString!)
         
         btnSet = UIButton(frame: CGRect(x: 20, y: txtString!.frame.maxY, width: UIScreen.main.bounds.width - 40, height: 40))
-        btnSet?.setTitle("设值", for: UIControlState())
-        btnSet?.setTitleColor(UIColor.black, for: UIControlState())
-        btnSet?.addTarget(self, action: #selector(StringTestViewController.setString(_:)), for: UIControlEvents.touchUpInside)
+        btnSet?.setTitle("设值", for: UIControl.State())
+        btnSet?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnSet?.addTarget(self, action: #selector(StringTestViewController.setString(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnSet!)
         
         
         btnGet = UIButton(frame: CGRect(x: 20, y: btnSet!.frame.maxY, width: UIScreen.main.bounds.width - 40, height: 40))
-        btnGet?.setTitle("取值", for: UIControlState())
-        btnGet?.setTitleColor(UIColor.black, for: UIControlState())
-        btnGet?.addTarget(self, action: #selector(StringTestViewController.getString(_:)), for: UIControlEvents.touchUpInside)
+        btnGet?.setTitle("取值", for: UIControl.State())
+        btnGet?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnGet?.addTarget(self, action: #selector(StringTestViewController.getString(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnGet!)
         
         

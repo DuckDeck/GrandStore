@@ -27,7 +27,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "cell")
         if cell == nil{
-            cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: "cell")
+            cell = UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "cell")
         }
         cell?.textLabel?.text = arrMenu[(indexPath as NSIndexPath).row]
         return cell!

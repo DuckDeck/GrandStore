@@ -29,48 +29,48 @@ class ObjectTestViewController: UIViewController {
         txtName = UITextField(frame: CGRect(x: 10, y: 80, width: UIScreen.main.bounds.size.width / 2 - 20, height: 40))
         txtName?.placeholder = "姓名"
         txtName?.text = "Optimus"
-        txtName?.borderStyle = UITextBorderStyle.roundedRect
+        txtName?.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(txtName!)
         txtAge = UITextField(frame: CGRect(x: txtName!.frame.maxX+10, y: txtName!.frame.origin.y, width: UIScreen.main.bounds.size.width / 2 - 20, height: 40))
         txtAge?.placeholder = "年龄"
         txtAge?.text = "11"
-        txtAge?.borderStyle = UITextBorderStyle.roundedRect
+        txtAge?.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(txtAge!)
         
         txtProvince = UITextField(frame: CGRect(x: 10, y: txtAge!.frame.maxY+5, width: UIScreen.main.bounds.size.width / 2 - 20, height: 40))
         txtProvince?.placeholder = "省"
         txtProvince?.text = "广东省"
-        txtProvince?.borderStyle = UITextBorderStyle.roundedRect
+        txtProvince?.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(txtProvince!)
         
         txtCity = UITextField(frame: CGRect(x: txtName!.frame.maxX+10, y: txtProvince!.frame.origin.y, width: UIScreen.main.bounds.size.width / 2 - 20, height: 40))
         txtCity?.placeholder = "市"
         txtCity?.text = "深圳市"
-        txtCity?.borderStyle = UITextBorderStyle.roundedRect
+        txtCity?.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(txtCity!)
         
         txtDistrict = UITextField(frame: CGRect(x: 10, y: txtCity!.frame.maxY+5, width: UIScreen.main.bounds.size.width - 20, height: 40))
         txtDistrict?.placeholder = "区"
         txtDistrict?.text = "南山区"
-        txtDistrict?.borderStyle = UITextBorderStyle.roundedRect
+        txtDistrict?.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(txtDistrict!)
         
         txtStreet = UITextField(frame: CGRect(x: 10, y: txtDistrict!.frame.maxY+5, width: UIScreen.main.bounds.size.width - 20, height: 40))
         txtStreet?.placeholder = "街道"
         txtStreet?.text = "XXXX路XXXX栋XXXX楼"
-        txtStreet?.borderStyle = UITextBorderStyle.roundedRect
+        txtStreet?.borderStyle = UITextField.BorderStyle.roundedRect
         view.addSubview(txtStreet!)
         
         btnSetStudent = UIButton(frame: CGRect(x: 10, y: txtStreet!.frame.maxY, width: UIScreen.main.bounds.size.width / 3 - 20, height: 40))
-        btnSetStudent?.setTitle("设置", for: UIControlState())
-        btnSetStudent?.setTitleColor(UIColor.black, for: UIControlState())
-        btnSetStudent?.addTarget(self, action: #selector(ObjectTestViewController.setStudent(_:)), for: UIControlEvents.touchUpInside)
+        btnSetStudent?.setTitle("设置", for: UIControl.State())
+        btnSetStudent?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnSetStudent?.addTarget(self, action: #selector(ObjectTestViewController.setStudent(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnSetStudent!)
         
         btnGetStudent = UIButton(frame: CGRect(x: btnSetStudent!.frame.maxX, y: txtStreet!.frame.maxY, width: UIScreen.main.bounds.size.width / 3 - 20, height: 40))
-        btnGetStudent?.setTitle("取置", for: UIControlState())
-        btnGetStudent?.setTitleColor(UIColor.black, for: UIControlState())
-        btnGetStudent?.addTarget(self, action: #selector(ObjectTestViewController.getStudent(_:)), for: UIControlEvents.touchUpInside)
+        btnGetStudent?.setTitle("取置", for: UIControl.State())
+        btnGetStudent?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnGetStudent?.addTarget(self, action: #selector(ObjectTestViewController.getStudent(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnGetStudent!)
         
         lblStudent = UILabel(frame: CGRect(x: 10, y: btnSetStudent!.frame.maxY, width: UIScreen.main.bounds.size.width - 20, height: 100))
@@ -79,22 +79,22 @@ class ObjectTestViewController: UIViewController {
         view.addSubview(lblStudent!)
         
         btnClear = UIButton(frame: CGRect(x:  btnGetStudent!.frame.maxX, y: btnGetStudent!.frame.origin.y, width: UIScreen.main.bounds.size.width / 3 - 20, height: 40))
-        btnClear?.setTitle("清空", for: UIControlState())
-        btnClear?.setTitleColor(UIColor.black, for: UIControlState())
-        btnClear?.addTarget(self, action: #selector(ObjectTestViewController.clearStudent(_:)), for: UIControlEvents.touchUpInside)
+        btnClear?.setTitle("清空", for: UIControl.State())
+        btnClear?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnClear?.addTarget(self, action: #selector(ObjectTestViewController.clearStudent(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnClear!)
         
         btnAddAbserver = UIButton(frame: CGRect(x:  10, y: lblStudent!.frame.maxY, width: UIScreen.main.bounds.size.width / 3 - 20, height: 40))
-        btnAddAbserver?.setTitle("添加观察", for: UIControlState())
-        btnAddAbserver?.setTitleColor(UIColor.black, for: UIControlState())
-        btnAddAbserver?.addTarget(self, action: #selector(ObjectTestViewController.addObserver(_:)), for: UIControlEvents.touchUpInside)
+        btnAddAbserver?.setTitle("添加观察", for: UIControl.State())
+        btnAddAbserver?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnAddAbserver?.addTarget(self, action: #selector(ObjectTestViewController.addObserver(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnAddAbserver!)
         
         
         btnRemoveObserver = UIButton(frame: CGRect(x:  btnAddAbserver!.frame.maxX + 5, y: lblStudent!.frame.maxY, width: UIScreen.main.bounds.size.width / 3 - 20, height: 40))
-        btnRemoveObserver?.setTitle("移除观察", for: UIControlState())
-        btnRemoveObserver?.setTitleColor(UIColor.black, for: UIControlState())
-        btnRemoveObserver?.addTarget(self, action: #selector(ObjectTestViewController.removeObserver(_:)), for: UIControlEvents.touchUpInside)
+        btnRemoveObserver?.setTitle("移除观察", for: UIControl.State())
+        btnRemoveObserver?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnRemoveObserver?.addTarget(self, action: #selector(ObjectTestViewController.removeObserver(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnRemoveObserver!)
     }
     
@@ -149,7 +149,7 @@ class ObjectTestViewController: UIViewController {
     }
     @objc func addObserver(_ sender:UIButton){
         stu.addObserver { (observerObject, observerKey, oldValue, newValue) -> Void in
-              self.lblStudent?.text = "old:\(oldValue.debugDescription), new:\(newValue.debugDescription)"
+            self.lblStudent?.text = "old:\(String(describing: oldValue.debugDescription)), new:\(String(describing: newValue.debugDescription))"
         }
      lblStudent?.text = "已经添加观察"
      

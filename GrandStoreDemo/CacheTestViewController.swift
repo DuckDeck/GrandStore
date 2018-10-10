@@ -21,34 +21,34 @@ class CacheTestViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         txtString = UITextField(frame: CGRect(x: 20, y: 67, width: UIScreen.main.bounds.width - 40, height: 40))
-        txtString?.borderStyle = UITextBorderStyle.roundedRect
+        txtString?.borderStyle = UITextField.BorderStyle.roundedRect
         txtString?.placeholder = "你要设定的值"
         txtString?.text = "你要设置的值"
         view.addSubview(txtString!)
         
         txtTimeout = UITextField(frame: CGRect(x: 20, y: txtString!.frame.maxY + 10, width: UIScreen.main.bounds.width - 40, height: 40))
-        txtTimeout?.borderStyle = UITextBorderStyle.roundedRect
+        txtTimeout?.borderStyle = UITextField.BorderStyle.roundedRect
         txtTimeout?.keyboardType = UIKeyboardType.numberPad
         txtTimeout?.placeholder = "缓存时间"
         view.addSubview(txtTimeout!)
         
         btnSet = UIButton(frame: CGRect(x: 10, y: txtTimeout!.frame.maxY, width: UIScreen.main.bounds.width / 3 - 20, height: 40))
-        btnSet?.setTitle("设值", for: UIControlState())
-        btnSet?.setTitleColor(UIColor.black, for: UIControlState())
-        btnSet?.addTarget(self, action: #selector(CacheTestViewController.setString(_:)), for: UIControlEvents.touchUpInside)
+        btnSet?.setTitle("设值", for: UIControl.State())
+        btnSet?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnSet?.addTarget(self, action: #selector(CacheTestViewController.setString(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnSet!)
         
         
         btnGet = UIButton(frame: CGRect(x: btnSet!.frame.maxX + 10, y: txtTimeout!.frame.maxY, width: UIScreen.main.bounds.width / 3 - 20, height: 40))
-        btnGet?.setTitle("取值", for: UIControlState())
-        btnGet?.setTitleColor(UIColor.black, for: UIControlState())
-        btnGet?.addTarget(self, action: #selector(CacheTestViewController.getString(_:)), for: UIControlEvents.touchUpInside)
+        btnGet?.setTitle("取值", for: UIControl.State())
+        btnGet?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnGet?.addTarget(self, action: #selector(CacheTestViewController.getString(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnGet!)
         
         btnSetCacheTime = UIButton(frame: CGRect(x: btnGet!.frame.maxX + 10, y: txtTimeout!.frame.maxY, width: UIScreen.main.bounds.width / 3 , height: 40))
-        btnSetCacheTime?.setTitle("设定缓存时间", for: UIControlState())
-        btnSetCacheTime?.setTitleColor(UIColor.black, for: UIControlState())
-        btnSetCacheTime?.addTarget(self, action: #selector(CacheTestViewController.setCacheTime(_:)), for: UIControlEvents.touchUpInside)
+        btnSetCacheTime?.setTitle("设定缓存时间", for: UIControl.State())
+        btnSetCacheTime?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnSetCacheTime?.addTarget(self, action: #selector(CacheTestViewController.setCacheTime(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnSetCacheTime!)
         
         lblString = UILabel(frame: CGRect(x: 20, y:btnGet!.frame.maxY, width: UIScreen.main.bounds.width - 40, height: 40))
@@ -58,9 +58,9 @@ class CacheTestViewController: UIViewController {
         view.addSubview(lblString!)
         
         btnClearCache = UIButton(frame: CGRect(x:  10, y: lblString!.frame.maxY, width: UIScreen.main.bounds.width / 3 , height: 40))
-        btnClearCache?.setTitle("清空缓存", for: UIControlState())
-        btnClearCache?.setTitleColor(UIColor.black, for: UIControlState())
-        btnClearCache?.addTarget(self, action: #selector(CacheTestViewController.clearCache(_:)), for: UIControlEvents.touchUpInside)
+        btnClearCache?.setTitle("清空缓存", for: UIControl.State())
+        btnClearCache?.setTitleColor(UIColor.black, for: UIControl.State())
+        btnClearCache?.addTarget(self, action: #selector(CacheTestViewController.clearCache(_:)), for: UIControl.Event.touchUpInside)
         view.addSubview(btnClearCache!)
         
     }
