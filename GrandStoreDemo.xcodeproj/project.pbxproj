@@ -140,13 +140,13 @@
 					A2F0959A1C2A28F3008C84F4 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 3YCGH6CCXA;
-						LastSwiftMigration = 0910;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
 			buildConfigurationList = A2F095961C2A28F3008C84F4 /* Build configuration list for PBXProject "GrandStoreDemo" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -321,7 +321,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = stan.GrandStoreDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -336,7 +336,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = stan.GrandStoreDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
