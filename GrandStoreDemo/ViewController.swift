@@ -2,8 +2,7 @@
 //  ViewController.swift
 //  GrandStoreDemo
 //
-//  Created by Tyrant on 12/23/15.
-//  Copyright © 2015 Qfq. All rights reserved.
+//  Created by Stan Hu on 2020/3/17.
 //
 
 import UIKit
@@ -59,6 +58,7 @@ class ViewController: UIViewController,UITableViewDataSource,UITableViewDelegate
             
         }
     }
+
 
 }
 

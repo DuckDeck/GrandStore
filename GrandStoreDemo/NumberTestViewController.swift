@@ -45,7 +45,12 @@ class NumberTestViewController: UIViewController {
     @objc func setString(_ sender:UIButton)
     {
         if let txt = txtString?.text{
-            demo2.Value = Double(txt)
+            if let num = Double(txt){
+                demo2.Value = num
+            }
+        }
+        else{
+            print("请输入数字")
         }
     }
     
