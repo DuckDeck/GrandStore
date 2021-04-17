@@ -104,6 +104,9 @@ open class GrandStore<T> {
                                 GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
                                 timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
                             }
+                            else if self.value is Codable{
+                                
+                            }
                             else{
                                 assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
                             }
