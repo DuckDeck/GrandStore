@@ -9,7 +9,7 @@
 import UIKit
 
 class ObjectTestViewController: UIViewController {
-    let stu = GrandStore(name: "student", defaultValue: Student())
+    let stu = GrandStore(name: "student", defaultValue: Student(name: "stan", age: 32, address: Address()))
      var txtName:UITextField?
     var txtAge:UITextField?
     var txtProvince:UITextField?
@@ -117,7 +117,7 @@ class ObjectTestViewController: UIViewController {
             txtAge?.text = "你要填写年龄"
             return
         }
-        let address = Address()
+        var address = Address()
         if txtCity?.text != ""{
             address.city = txtCity!.text!
         }
@@ -161,71 +161,37 @@ class ObjectTestViewController: UIViewController {
     }
     
 }
-class Student:NSObject, NSCoding {
-    var name:String
-    var age:Int
-    var id:Int
-    var address:Address
-    override init(){
-        self.name = ""
-        self.age = 0
-        self.id = 0
-        self.address = Address()
-    }
+struct Student:Codable {
+    var name:String = ""
+    var age:Int = 0
+    var id:Int = 0
+    var address:Address = Address()
+    
+    
+    
     init(name:String,age:Int,address:Address){
         self.name = name
         self.age = age
         self.address = address
         id = 1
     }
-    @objc func encode(with aCoder: NSCoder) {
-        aCoder.encode(name, forKey: "name")
-        aCoder.encode(age, forKey: "age")
-        aCoder.encode(id, forKey: "id")
-        aCoder.encode(address, forKey: "address")
-    }
-    @objc required init?(coder aDecoder: NSCoder) {
-        name = aDecoder.decodeObject(forKey: "name") as! String
-        age = aDecoder.decodeInteger(forKey: "age")
-        id = aDecoder.decodeInteger(forKey: "id")
-        address = aDecoder.decodeObject(forKey: "address") as! Address
-    }
+   
     func desciption()->String{
         return "name:\(name) age:\(age)id :\(id) address:\(address)"
     }
     
-   override  var debugDescription:String{
-        return self.desciption()
-    }
 }
 
 
-class  Address:NSObject,NSCoding {
+struct  Address:Codable {
     var city:String = ""
     var provice:String = ""
     var district:String = ""
     var street:String = ""
     
-    override init(){
-        
-    }
-    
-    @objc func encode(with aCoder: NSCoder) {
-        aCoder.encode(city, forKey: "city")
-        aCoder.encode(provice, forKey: "provice")
-        aCoder.encode(district, forKey: "district")
-        aCoder.encode(street, forKey: "street")
-    }
-    @objc required init?(coder aDecoder: NSCoder) {
-        city = aDecoder.decodeObject(forKey: "city") as! String
-        provice = aDecoder.decodeObject(forKey: "provice") as! String
-        district = aDecoder.decodeObject(forKey: "district") as! String
-        street = aDecoder.decodeObject(forKey: "street") as! String
-    }
+   
     func desciption()->String{
         return "province:\(provice) city\(city) district \(district) street \(street)"
     }
-    override  var debugDescription:String{
-        return self.desciption()
-    }
+    
 }

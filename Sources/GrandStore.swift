@@ -28,7 +28,7 @@ fileprivate func <= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-open class GrandStore<T> {
+open class GrandStore<T> where T :Codable {
     fileprivate var name:String!
     fileprivate var value:T?
     fileprivate var defaultValue:T?
@@ -38,7 +38,7 @@ open class GrandStore<T> {
     fileprivate var isTemp = false//只是放到内存里临时保存
     fileprivate var timeoutDate:Date?
     fileprivate var observerBlock:((_ observerObject:AnyObject,_ observerKey:String,_ oldValue:AnyObject,_ newValue:AnyObject)->Void)?
-   public  init(name:String,defaultValue:T) {
+    public  init(name:String,defaultValue:T) {
         self.name = name;
         self.defaultValue = defaultValue;
         storeLevel = self.getStoreLevel()
@@ -100,29 +100,15 @@ open class GrandStore<T> {
                     if !GrandCache.globleCache.hasCacheForKey(self.name){
                         self.value = self.defaultValue
                         if timeoutDate != nil{
-                            if self.value is NSCoding{
-                                GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
-                                timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
-                            }
-                            else if self.value is Codable{
-                                
-                            }
-                            else{
-                                assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
-                            }
+                            GrandCache.globleCache.setObject(self.value, key: self.name, timeoutInterval: Double(self.timeout))
                         }
                         else{
-                            if self.value is NSCoding{
-                                GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name)
-                            }
-                            else{
-                                assert(true, "if you want to store the complex  value, you must let it abide by NSCoding protocal")
-                            }
+                            GrandCache.globleCache.setObject(self.value, key: self.name)
                         }
                         hasValue = true
                     }
                     else{
-                        self.value = GrandCache.globleCache.objectForKey(self.name) as? T
+                        self.value = GrandCache.globleCache.objectForKey(self.name)
                         hasValue = true
                     }
                 }
@@ -160,7 +146,7 @@ open class GrandStore<T> {
             {
                 if timeoutDate != nil{
                     if self.value is NSCoding{
-                        GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name, timeoutInterval: Double(self.timeout))
+                        GrandCache.globleCache.setObject(self.value, key: self.name, timeoutInterval: Double(self.timeout))
                         timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
                     }
                     else{
@@ -169,7 +155,7 @@ open class GrandStore<T> {
                 }
                 else{
                     if self.value is NSCoding{
-                        GrandCache.globleCache.setObject(self.value as! NSCoding, key: self.name)
+                        GrandCache.globleCache.setObject(self.value, key: self.name)
                         // timeoutDate = NSDate(timeIntervalSinceNow: Double(self.timeout))
                     }
                     else{
@@ -387,6 +373,8 @@ class GrandCache {
     var needSave:Bool = false
     var frozenCacheInfo:[String:Date]
     var defaultTimeoutInterval:TimeInterval = Double(Int.max)
+    let encoder = JSONEncoder()
+    let decoder = JSONDecoder()
     init(){
         var cacheDirectory:NSString = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.cachesDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)[0] as NSString
         let oldCacheDirectroy = (cacheDirectory.appendingPathComponent(ProcessInfo.processInfo.processName) as NSString).appendingPathComponent("GrandStore")
@@ -603,10 +591,12 @@ class GrandCache {
     //Image就不要了
     //plist 也不要了
     //Object
-    func objectForKey(_ key:String)-> NSCoding?{
+    func objectForKey<T>(_ key:String)-> T? where T:Decodable{
         if self.hasCacheForKey(key){
             if let data = self.dataForKey(key){
-                return NSKeyedUnarchiver.unarchiveObject(with: data) as? NSCoding
+                if let obj = try? decoder.decode(T.self, from: data){
+                    return obj
+                }
             }
             else{
                 return nil
@@ -615,12 +605,16 @@ class GrandCache {
         return nil
     }
     
-    func setObject(_ obj:NSCoding,key:String){
-        setObject(obj, key: key, timeoutInterval: defaultTimeoutInterval)
+    func setObject<T>(_ obj:T,key:String)where T:Encodable{
+       setObject(obj, key: key, timeoutInterval: defaultTimeoutInterval)
     }
     
-    func setObject(_ obj:NSCoding,key:String,timeoutInterval:TimeInterval){
-        self.setData(NSKeyedArchiver.archivedData(withRootObject: obj), key: key, timeoutInterval: timeoutInterval)
+    func setObject<T>(_ obj:T,key:String,timeoutInterval:TimeInterval) where T:Encodable{
+        if let data = try? encoder.encode(obj){
+            self.setData(data, key: key, timeoutInterval: timeoutInterval)
+
+        }
+        
     }
     
     
