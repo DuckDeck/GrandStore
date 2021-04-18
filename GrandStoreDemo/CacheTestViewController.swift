@@ -20,7 +20,7 @@ class CacheTestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        txtString = UITextField(frame: CGRect(x: 20, y: 67, width: UIScreen.main.bounds.width - 40, height: 40))
+        txtString = UITextField(frame: CGRect(x: 20, y: 167, width: UIScreen.main.bounds.width - 40, height: 40))
         txtString?.borderStyle = UITextField.BorderStyle.roundedRect
         txtString?.placeholder = "你要设定的值"
         txtString?.text = "你要设置的值"

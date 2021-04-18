@@ -18,7 +18,7 @@ class TempSaveTestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
-        txtString = UITextField(frame: CGRect(x: 20, y: 67, width: UIScreen.main.bounds.width - 40, height: 40))
+        txtString = UITextField(frame: CGRect(x: 20, y: 167, width: UIScreen.main.bounds.width - 40, height: 40))
         txtString?.layer.borderColor = UIColor.blue.cgColor
         txtString?.layer.borderWidth = 0.5
         view.addSubview(txtString!)

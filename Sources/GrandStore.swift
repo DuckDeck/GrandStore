@@ -216,7 +216,7 @@ open class GrandStore<T> where T :Codable {
         return false
     }
     
-  open  func appendWith(_ item:AnyObject) -> Bool {
+   open func appendWith(_ item:AnyObject) -> Bool {
         if let items = value as? NSArray {
             let newItem = NSMutableArray(array: items)
             newItem.add(item)
@@ -587,10 +587,7 @@ class GrandCache {
     func setString(_ str:String,key:String,timeoutInterval:TimeInterval){
         self.setData(str.data(using: String.Encoding.utf8)!, key: key, timeoutInterval: timeoutInterval)
     }
-    
-    //Image就不要了
-    //plist 也不要了
-    //Object
+
     func objectForKey<T>(_ key:String)-> T? where T:Decodable{
         if self.hasCacheForKey(key){
             if let data = self.dataForKey(key){

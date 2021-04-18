@@ -26,7 +26,7 @@ class ObjectTestViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         
-        txtName = UITextField(frame: CGRect(x: 10, y: 80, width: UIScreen.main.bounds.size.width / 2 - 20, height: 40))
+        txtName = UITextField(frame: CGRect(x: 10, y: 180, width: UIScreen.main.bounds.size.width / 2 - 20, height: 40))
         txtName?.placeholder = "姓名"
         txtName?.text = "Optimus"
         txtName?.borderStyle = UITextField.BorderStyle.roundedRect
