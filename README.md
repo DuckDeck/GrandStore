@@ -4,7 +4,7 @@
 ## GrandStore是一个直观且强大的iOS存储库，他用变量名来保存任何类型
 
 ## 关键特点
-* GrandStore是基于泛型类的,所以它可以存储任何的Object,只要符合了NSCoding协议
+* GrandStore是基于泛型类的,所以它可以存储任何的Object,只要符合了Codable协议
 * 可以任意存值和取值
 * 强力的缓存特性
 * 存储的值是可以被观察的,只要你调用了addObserver函数.
