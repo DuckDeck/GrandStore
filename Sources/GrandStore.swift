@@ -42,7 +42,7 @@ open class GrandStore<T> where T :Codable {
         self.name = name;
         self.defaultValue = defaultValue;
         storeLevel = self.getStoreLevel()
-        //GrandStore.sharedStore.setObject(self, forKey: self.name)
+        GrandStoreSetting.shared[name] = storeLevel
     }
     
 
@@ -58,7 +58,7 @@ open class GrandStore<T> where T :Codable {
             isTemp = true
         }
         storeLevel = self.getStoreLevel()
-        //GrandStore.sharedStore.setObject(self, forKey: self.name)
+        GrandStoreSetting.shared[name] = storeLevel
     }
     
     
@@ -280,7 +280,7 @@ open class GrandStore<T> where T :Codable {
     fileprivate func getStoreLevel()->Int
     {
         if self.defaultValue! is NSNumber || self.defaultValue! is String || self.defaultValue! is Date || self.defaultValue! is Data
-        { //need test NSData can store in the NSUserDefaults, I whether it need store the NSArray or NSdictonary
+        {
             return 0
         }
         return 1
@@ -293,68 +293,56 @@ open class GrandStore<T> where T :Codable {
     //在Swift中,当需要把一个类转为泛型类时,Swift必需知道这个泛型类是个什么样的类,不然就不行,现在Swift又没有KVC和KVO,所以很多OBJC的功能目前实现不了,以后看有没有机会实现
 }
 
-//class GrandStoreSetting {
-//    private static let sharedStoreInstance = NSMutableDictionary()
-//    class var sharedStore:NSMutableDictionary {
-//        return sharedStoreInstance
-//    }
-//    private static let sharedObserverKeyInstance = NSMutableArray()
-//    class var  sharedObserverKey:NSMutableArray{
-//        return sharedObserverKeyInstance
-//    }
-//    static func clearAllCache(){
-//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-//            obj.clear()
-//        }
-//    }
-//    static  func clearCacheWithNames(names:[String]){
-//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-//            if names.contains(obj.name){
-//                obj.clear()
-//            }
-//        }
-//    }
-//    static func clearCacheExceptNames(names:[String]){
-//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-//            if !names.contains(obj.name){
-//                obj.clear()
-//            }
-//        }
-//    }
-//    
-//    static func clearCache(){
-//        GrandStore.sharedStore.enumerateKeysAndObjectsUsingBlock { (obj, idx, stop) -> Void in
-//            //            if let store = obj as? G_S{
-//            //                if store.timeoutDate != nil{
-//            //                    store.clear()
-//            //                }
-//            //            }
-//            //没办法,只有用KVC了
-//            //            if let _ = obj.valueForKey("timeoutDate") as? NSDate{
-//            //
-//            //            }
-//            //            else{
-//            //                obj.clear()
-//            //            }
-//            //swift 里面没有KVC
-//            
-//        }
-//    }
-    //    static  func getValueWithName(name:String)->AnyObject?{
-    //        if let gs = GrandStore.sharedStore.objectForKey(name) as? G_S{
-    //            return gs.Value as? AnyObject
-    //        }
-    //        else{
-    //            return nil;
-    //        }
-    //    }
-    //    static  func setValueWithName(name:String,value:AnyObject){
-    //        if let gs = GrandStore.sharedStore.objectForKey(name) as? G_S{
-    //            gs.Value = value as? T
-    //        }
-    //    }
+class GrandStoreSetting {
+    static var shared = [String:Int]()
     
-//}
+    class func  clearAll() {
+        let userDefault = UserDefaults.standard
+        for item in shared.enumerated(){
+            if item.element.value == 0 {
+                userDefault.removeObject(forKey: item.element.key)
+            }
+            else{
+                GrandCache.globleCache.removeCacheForKey(item.element.key)
+            }
+        }
+    }
+    
+
+    static var allKeys :[String]{
+        return shared.keys.sorted()
+    }
+    static  func clearCacheWithName(names:String){
+        let userDefault = UserDefaults.standard
+        for item in shared.enumerated(){
+            if names == item.element.key {
+                if item.element.value == 0 {
+                    userDefault.removeObject(forKey: item.element.key)
+                }
+                else{
+                    GrandCache.globleCache.removeCacheForKey(item.element.key)
+                }
+                break;
+            }
+           
+        }
+    }
+    static  func clearCacheWithNames(names:[String]){
+        let userDefault = UserDefaults.standard
+        for item in shared.enumerated(){
+            if names.contains(item.element.key) {
+                if item.element.value == 0 {
+                    userDefault.removeObject(forKey: item.element.key)
+                }
+                else{
+                    GrandCache.globleCache.removeCacheForKey(item.element.key)
+                }
+            }
+           
+        }
+    }
+    
+}
 //在Swift目前的机制下,这个类没什么用
 
 
