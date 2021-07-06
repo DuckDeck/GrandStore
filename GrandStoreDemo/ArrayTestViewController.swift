@@ -55,7 +55,7 @@ class ArrayTestViewController: UIViewController {
     @objc func getString(_ sender:UIButton)
     {
         var str = ""
-        for s in arrTest.Value!{
+        for s in arrTest.Value{
             str += s
         }
         lblString?.text = str
