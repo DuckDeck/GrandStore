@@ -18,21 +18,24 @@ open class GrandStore<T> where T: Codable {
     fileprivate var isTemp = false // 只是放到内存里临时保存
     fileprivate var timeoutDate: Date?
     fileprivate var observerBlock: ((_ observerObject: AnyObject, _ observerKey: String, _ oldValue: AnyObject, _ newValue: AnyObject) -> Void)?
+    fileprivate var desc = ""
     @objc var key: String {
         return name
     }
     
-    public init(name: String, defaultValue: T) {
+    public init(name: String, defaultValue: T, desc: String = "") {
         self.name = name
         self.defaultValue = defaultValue
+        self.desc = desc
         storeLevel = getStoreLevel()
         GrandStoreSetting.shared[name] = storeLevel
     }
     
-    public init(name: String, defaultValue: T, timeout: Int) { // 一般这两个就够了
+    public init(name: String, defaultValue: T, timeout: Int, desc: String = "") { // 一般这两个就够了
         self.name = name
         self.defaultValue = defaultValue
         self.timeout = timeout
+        self.desc = desc
         if self.timeout > 0 {
             timeoutDate = Date(timeIntervalSinceNow: Double(self.timeout))
         }
