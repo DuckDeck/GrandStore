@@ -44,12 +44,11 @@ class ArrayTestViewController: UIViewController {
     @objc func setString(_ sender:UIButton)
     {
         if let txt = txtString?.text{
-//            var arr = arrTest.Value
-//            arr?.append(txt)
-//            arrTest.Value = arr
-         _ =   arrTest.appendWith(txt as AnyObject)
-            lblString?.text = "\(txt)成功添加到数组"
+            var tmp = arrTest.Value
+            tmp.append(txt)
+            arrTest.Value = tmp
         }
+        
     }
     
     @objc func getString(_ sender:UIButton)

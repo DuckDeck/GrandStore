@@ -21,6 +21,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		AE86421726D8EE6C00180655 /* MMKV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE86421626D8EE6C00180655 /* MMKV.framework */; };
+		AE86421926D8EEC800180655 /* MMKV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE86421626D8EE6C00180655 /* MMKV.framework */; };
+		AE86421A26D8EEC800180655 /* MMKV.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AE86421626D8EE6C00180655 /* MMKV.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AEE3134D242076F600C32768 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE3134C242076F600C32768 /* AppDelegate.swift */; };
 		AEE3134F242076F600C32768 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE3134E242076F600C32768 /* SceneDelegate.swift */; };
 		AEE31351242076F600C32768 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE31350242076F600C32768 /* ViewController.swift */; };
@@ -57,7 +60,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		AE86421B26D8EEC800180655 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AE86421A26D8EEC800180655 /* MMKV.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		AE86421626D8EE6C00180655 /* MMKV.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MMKV.framework; sourceTree = "<group>"; };
 		AEE3134A242076F500C32768 /* GrandStoreDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GrandStoreDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEE3134C242076F600C32768 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AEE3134E242076F600C32768 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -84,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE86421926D8EEC800180655 /* MMKV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -91,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 0;
 			files = (
+				AE86421726D8EE6C00180655 /* MMKV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,6 +178,7 @@
 		OBJ_7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AE86421626D8EE6C00180655 /* MMKV.framework */,
 				OBJ_8 /* GrandStore.swift */,
 			);
 			path = Sources;
@@ -181,6 +202,7 @@
 				AEE31346242076F500C32768 /* Sources */,
 				AEE31347242076F500C32768 /* Frameworks */,
 				AEE31348242076F500C32768 /* Resources */,
+				AE86421B26D8EEC800180655 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -395,6 +417,10 @@
 				DEVELOPMENT_TEAM = 3YCGH6CCXA;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sources",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -459,6 +485,10 @@
 				DEVELOPMENT_TEAM = 3YCGH6CCXA;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Sources",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -488,6 +518,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(PROJECT_DIR)/Sources",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GrandStore.xcodeproj/GrandStore_Info.plist;
@@ -516,6 +547,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+					"$(PROJECT_DIR)/Sources",
 				);
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = GrandStore.xcodeproj/GrandStore_Info.plist;
